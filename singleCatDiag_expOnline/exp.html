@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+
+        <!-- imports -->
+        
+        <!-- webrunner dependency -->
+        <!-- imports -->
+        <script src="static/utils.js"></script>
+        <script src='static/experiments/isoLabel/materials/ocanvas-2.10.0.js'></script>
+        <script src='static/experiments/isoLabel/instructions.js'></script>
+        <script src='static/experiments/isoLabel/ready.js'></script>
+       <script src='static/experiments/isoLabel/classification.js'></script>
+        <script src='static/experiments/isoLabel/dualBtnClassification.js'></script>
+        <script src='static/experiments/isoLabel/stimPair_Simultaneous.js'></script>
+        <script src='static/experiments/isoLabel/sort.js'></script>
+        <script src='static/experiments/isoLabel/typicality.js'></script>
+        <script src='static/experiments/isoLabel/study.js'></script>
+        <!-- ^ these are all the experiment phases we commonly use in the kurtz lab -->
+        <!-- <link href="static/testExp/materials/styles.css" rel="stylesheet" type="text/css"></link> -->
+
+        <style>
+            #instructions{
+
+                margin-left: 40px;
+                margin-right: 40px;
+                font-size: x-large;
+
+            }
+        </style>
+
+    </head>
+    
+    <!-- <body style = 'margin-bottom: 0px; margin-top: 0px; margin-left: 0px; margin-right: 0px;'> -->
+    <body style = 'background: rgb(255, 255, 255);'>
+        <div id='main'></div>
+
+        <script type="text/javascript">
+            // window.onbeforeunload = function() { return "Are you sure you want to go back? Your data will not be saved"; } // <-- use this to warn users if they accidently hit the back button and delete all their data (its gunna save a lot of headaches)
+
+            expId = 'antiGCMV2'
+
+            
+
+            subject = {
+                id: localStorage.getItem('subject_id'),
+                //id: '1',
+                condition: localStorage.getItem('condition'),
+                // condition: '3',
+                results: {
+                    'study': [],
+                    'trainPhase': [],
+                    'testPhase': [],
+                    'typicality': [],
+
+                }
+            }
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// HERE IS ALL THE OBSERVATIONAL STUDY PHASE SET UP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+//Includes single cat diag observational (cond2)
+
+            //OBSERVATIONAL STUDY PHASE
+    stim_study = {
+        2: [
+            'static/experiments/antiGCMV2/materials/single_cat_obs/A1.png',
+            'static/experiments/antiGCMV2/materials/single_cat_obs/A2.png',
+            'static/experiments/antiGCMV2/materials/single_cat_obs/A3.png',
+            'static/experiments/antiGCMV2/materials/single_cat_obs/A4.png',
+            'static/experiments/antiGCMV2/materials/single_cat_obs/A5.png',
+            'static/experiments/antiGCMV2/materials/single_cat_obs/A6.png',
+            'static/experiments/antiGCMV2/materials/single_cat_obs/A7.png',
+        ],
+    }
+
+    labels_study = {
+        2: ['a','a', 'a', 'a', 'a', 'a', 'a'], // Changed to 'a' to match categories: ['a']
+    }
+
+    study_params = {
+        'objects': stim_study[subject['condition']],
+        'labels': labels_study[subject['condition']],
+        'categories': ['a'],
+        'btnLabels': {'a': 'Alpha'},
+        'n_blocks': 12,
+        'results': subject['results']['study'],
+        'feedback': false,
+    }
+
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// HERE IS ALL THE Classification TRAINING PHASE SET UP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+//Includes top-middle-bottom (cond1) and single cat diag ANotA (cond3)
+
+            stim_train = {
+                
+            //CONDITION 1: TOP MIDDLE BOTTOM
+                1: [
+
+                //HERE ARE THE A's
+                    'static/experiments/antiGCMV2/materials/top_middle_bottom/A1.png',
+                    'static/experiments/antiGCMV2/materials/top_middle_bottom/A2.png',
+                    'static/experiments/antiGCMV2/materials/top_middle_bottom/A3.png',
+                    'static/experiments/antiGCMV2/materials/top_middle_bottom/A4.png',
+                    'static/experiments/antiGCMV2/materials/top_middle_bottom/A5.png',
+                    'static/experiments/antiGCMV2/materials/top_middle_bottom/A6.png',
+
+
+                //HERE ARE THE B's
+                    'static/experiments/antiGCMV2/materials/top_middle_bottom/B1.png',
+                    'static/experiments/antiGCMV2/materials/top_middle_bottom/B2.png',
+                    'static/experiments/antiGCMV2/materials/top_middle_bottom/B3.png',
+                    'static/experiments/antiGCMV2/materials/top_middle_bottom/B4.png',
+                    'static/experiments/antiGCMV2/materials/top_middle_bottom/B5.png',
+                    'static/experiments/antiGCMV2/materials/top_middle_bottom/B6.png',
+    
+                ],
+
+
+                3: [
+
+
+                        //HERE ARE THE A's
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A1.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A2.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A3.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A4.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A5.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A6.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A7.png',
+
+
+
+
+
+                        //HERE ARE THE NotA's
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA1.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA2.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA3.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA4.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA5.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA6.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA7.png',
+
+
+
+                ],
+
+
+                
+            }
+
+            labels_train = {
+                //CONDITION 1: TOP MIDDLE BOTTOM
+                1: ['a', 'a', 'a', 'a','a', 'a',
+                    'b', 'b', 'b', 'b', 'b', 'b' ],
+
+
+                3: [
+                    'a', 'a', 'a', 'a', 'a', 'a','a',
+                    'NotA', 'NotA', 'NotA', 'NotA', 'NotA', 'NotA', 'NotA'
+                ],
+            }
+
+            train_params = {
+                'objects': stim_train[subject['condition']],
+                'labels': labels_train[subject['condition']],
+                'categories': subject['condition'] === '1' ? ['a', 'b'] : ['a', 'NotA'],
+                'btnLabels': subject['condition'] === '1' ? {'a': 'Alpha', 'b': 'Beta'} : {'a': 'Yes, Alpha', 'NotA': 'No, Not Alpha'} ,
+                'n_blocks': 12,
+                'results': subject['results']['trainPhase'],
+                'feedback': true,
+                'finish_early': true,
+                'lookback': 14,
+                'finish_early_criterion': 1.0,
+                'min_blocks': 0,
+                'one_class': subject['condition'] === '1' ? false : true
+            }
+
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// HERE IS THE  Classification TEST PHASE SET UP !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+// Icludes top-middle-bottom (cond1), single cat diag Observational (cond2), and single cat diag ANotA (cond3)
+            
+            stim_test = {
+            
+            
+                //CONDITION 1: top middle bottom
+                1: [
+                
+                //HERE ARE THE A's
+                    'static/experiments/antiGCM/materials/top_middle_bottom/A1.png',
+                    'static/experiments/antiGCM/materials/top_middle_bottom/A2.png',
+                    'static/experiments/antiGCM/materials/top_middle_bottom/A3.png',
+                    'static/experiments/antiGCM/materials/top_middle_bottom/A4.png',
+                    'static/experiments/antiGCM/materials/top_middle_bottom/A5.png',
+                    'static/experiments/antiGCM/materials/top_middle_bottom/A6.png',
+
+
+                //HERE ARE THE B's
+                    'static/experiments/antiGCM/materials/top_middle_bottom/B1.png',
+                    'static/experiments/antiGCM/materials/top_middle_bottom/B2.png',
+                    'static/experiments/antiGCM/materials/top_middle_bottom/B3.png',
+                    'static/experiments/antiGCM/materials/top_middle_bottom/B4.png',
+                    'static/experiments/antiGCM/materials/top_middle_bottom/B5.png',
+                    'static/experiments/antiGCM/materials/top_middle_bottom/B6.png',
+    
+
+                //HERE ARE THE T's 1
+                    'static/experiments/antiGCM/materials/top_middle_bottom/T1.png',
+                    'static/experiments/antiGCM/materials/top_middle_bottom/T2.png',
+
+                //HERE ARE THE T's 2
+                    'static/experiments/antiGCM/materials/top_middle_bottom/T1.png',
+                    'static/experiments/antiGCM/materials/top_middle_bottom/T2.png',
+
+                //HERE ARE THE T's 3
+                    'static/experiments/antiGCM/materials/top_middle_bottom/T1.png',
+                    'static/experiments/antiGCM/materials/top_middle_bottom/T2.png',
+
+                //HERE ARE THE T's 4
+                    'static/experiments/antiGCM/materials/top_middle_bottom/T1.png',
+                    'static/experiments/antiGCM/materials/top_middle_bottom/T2.png',
+
+                //HERE ARE THE T's 5
+                    'static/experiments/antiGCM/materials/top_middle_bottom/T1.png',
+                    'static/experiments/antiGCM/materials/top_middle_bottom/T2.png',
+
+                ],
+
+
+
+                //CONDITION 2: Single Cat Observational Test
+            2: [
+                // The 7 A items
+                'static/experiments/antiGCMV2/materials/single_cat_obs/A1.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/A2.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/A3.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/A4.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/A5.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/A6.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/A7.png',
+                // Plus your Test/Transfer items (X and Y diagonals)
+                //X
+                'static/experiments/antiGCMV2/materials/single_cat_obs/X1.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/X2.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/X3.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/X4.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/X5.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/X6.png',
+                //Y
+                'static/experiments/antiGCMV2/materials/single_cat_obs/Y1.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/Y2.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/Y3.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/Y4.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/Y5.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/Y6.png',
+
+            ],
+
+            //CONDITION 3: A vs Not A Test
+            3: [
+
+                        //HERE ARE THE A's
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A1.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A2.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A3.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A4.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A5.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A6.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A7.png',
+
+
+
+
+
+                        //HERE ARE THE NotA's
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA1.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA2.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA3.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA4.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA5.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA6.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA7.png',
+
+
+                        // Plus your Test/Transfer items
+                        // X
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/X1.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/X2.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/X3.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/X4.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/X5.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/X6.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/X7.png',
+                        // Y
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/Y1.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/Y2.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/Y3.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/Y4.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/Y5.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/Y6.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/Y7.png',
+
+            ],
+
+
+
+    
+
+            }
+
+
+
+
+
+
+labels_test = {
+    1: ['a', 'a', 'a', 'a','a', 'a', 'b', 'b', 'b', 'b', 'b', 'b', 't', 't', 't', 't', 't', 't', 't', 't', 't', 't' ],
+
+    2: ['a', 'a', 'a', 'a', 'a', 'a', 'a', 
+        'x', 'x', 'x', 'x', 'x', 'x',
+        'y', 'y', 'y', 'y', 'y', 'y',], 
+
+
+    3: ['a', 'a', 'a', 'a', 'a', 'a', 'a', 
+        'NotA', 'NotA', 'NotA', 'NotA', 'NotA', 'NotA', 'NotA',
+        'x', 'x', 'x', 'x', 'x', 'x',
+        'y', 'y', 'y', 'y', 'y', 'y',],
+}
+
+// Keep test_params as you had it, but for Cond 2 & 3 we need to make sure the buttons show 'Not A' if we are in condition 3
+test_params = {
+    'objects': stim_test[subject['condition']],
+    'labels': labels_test[subject['condition']],
+    'categories': subject['condition'] === '1' ? ['a', 'b'] : ['a', 'NotA'],
+    'btnLabels': subject['condition'] === '1' ? {'a': 'Alpha', 'b': 'Beta'} : {'a': 'Yes, Alpha', 'NotA': 'No, Not Alpha'} ,
+    'n_blocks': 1,
+    'results': subject['results']['testPhase'],
+    'feedback': false,
+    'one_class': subject['condition'] === '1' ? false : true
+}
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// HERE IS THE  Tpyicality PHASE SET UP !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+// single cat diag Observational (cond2), and single cat diag ANotA (cond3)
+
+
+            stim_typ1 = {
+
+                2: [
+                // The 7 A items
+                'static/experiments/antiGCMV2/materials/single_cat_obs/A1.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/A2.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/A3.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/A4.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/A5.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/A6.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/A7.png',
+                // Plus your Test/Transfer items (X and Y diagonals)
+                //X
+                'static/experiments/antiGCMV2/materials/single_cat_obs/X1.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/X2.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/X3.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/X4.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/X5.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/X6.png',
+                //Y
+                'static/experiments/antiGCMV2/materials/single_cat_obs/Y1.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/Y2.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/Y3.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/Y4.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/Y5.png',
+                'static/experiments/antiGCMV2/materials/single_cat_obs/Y6.png',
+
+                    
+                ],
+
+                3: [
+
+                        //HERE ARE THE A's
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A1.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A2.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A3.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A4.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A5.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A6.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/A7.png',
+
+                        //HERE ARE THE NotA's
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA1.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA2.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA3.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA4.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA5.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA6.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/NotA7.png',
+
+
+                        // Plus your Test/Transfer items
+                        // X
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/X1.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/X2.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/X3.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/X4.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/X5.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/X6.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/X7.png',
+                        // Y
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/Y1.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/Y2.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/Y3.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/Y4.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/Y5.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/Y6.png',
+                        'static/experiments/antiGCMV2/materials/single_cat_ANOTA/Y7.png',
+
+                ],
+
+            }
+
+            labels_typ1 = {
+        2: ['Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 
+            'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha',
+            'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha',], 
+
+
+        3: ['Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 
+            'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha',
+            'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha',
+            'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha',]
+        
+            }
+
+
+            typicality_params1 = {
+                'objects': stim_typ1[subject['condition']],
+                'labels': labels_typ1[subject['condition']],
+                'n_blocks': 1,
+                'results': subject['results']['typicality'],
+                'sliderBins': 6,
+                'binLabels': ['1','2','3','4','5','6','7',]
+            }
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// HERE IS ALL THE Event LOGIC!!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// CONDITION 1!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (['1'].includes(subject['condition'])) {
+                eventGraph = {
+                    instructions: function () {
+                        instructions.start(
+                            {text: '<font size="+3" margin = 20px><div style="text-align: center;">Welcome to the experiment; glad you could join.</div><br><br><div style="text-align: justify;">You will be shown a set of examples from a domain of geometric shapes. Each example will belong to one of two types:  Alphas and Betas. Your task is to learn how to tell whether a shape is an Alpha or a Beta. You will be shown the correct answer after each response to help you learn. At first you will just have to guess, but you will gain experience as you go. It may not be easy, but before long you should develop a good sense of how to decide what type of shape is presented. After you complete your training, you will be asked to apply your knowledge to a set of shapes that includes ones that have not been classified.<div><br><br> <div style="text-align: center;">Good luck!<div></font> '}, // params
+                            function () { setTimeout(function () { // what to do next
+                                eventGraph.ready()
+                            }, 100)}
+                        )
+                    },
+
+                    ready: function () {
+                        ready.start(
+                            {previous_event: eventGraph.instructions}, // params
+                            function () { setTimeout(function () { // what to do next
+                                eventGraph.training()
+                            }, 100)}
+                        )
+                    },
+
+                    training: function () {
+                        classification.start(
+                            train_params, // params
+                            function () { setTimeout( function () { // what to do next
+                                eventGraph.instructions2()
+                            },500)}
+                        )
+                    },
+
+                    instructions2: function () {
+                        instructions.start(
+                            {text: '<font size="+3"><div style="text-align: justify;">Now it is time to move to the next phase: You will be asked to use your knowledge to decide which type of geometric shape is being presented. Some of the geometric shapes will be exactly the same as those in the training phase, but some will be completely new. Since some unclassified geometric shapes will be included in this phase, there will not be corrective feedback as you had in training.<div></font>'}, // params
+                            function () { setTimeout(function () { // what to do next
+                                eventGraph.ready2()
+                            }, 100)}
+                        )
+                    },
+
+                    ready2: function () {
+                        ready.start(
+                            {previous_event: eventGraph.instructions}, // params
+                            function () { setTimeout(function () { // what to do next
+                                eventGraph.test()
+                            }, 100)}
+                        )
+                    },
+
+                    test: function () {
+                        classification.start(
+                            test_params, // params
+                            function () { setTimeout( function () { // what to do next
+                                eventGraph.end()
+                            },500)}
+                        )
+                    },
+                    
+                    end: function () {
+                        instructions.start({text: 'All Finished!'}, function () {
+                            save(subject)
+                        })
+                    },
+                }
+
+                // initialize first event
+                eventGraph.instructions()
+            }
+
+
+
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// CONDITION 2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+if (['2'].includes(subject['condition'])) {
+                eventGraph = {
+                    instructions: function () {
+                        instructions.start(
+                            {text: '<font size="+3" margin = 20px><div style="text-align: center;">Welcome to the experiment.</div><br><br><div style="text-align: justify;">You will be shown a set of examples from a domain of geometric shapes. Each example will belong to a class of shapes called the "Alpha" category. Please study them carefully. Later, you will later be tested on your knowledge of the Alpha category.<div><br><br> <div style="text-align: center;">Good luck!<div></font> '}, 
+                            function () { setTimeout(function () { eventGraph.ready() }, 100)}
+                        )
+                    },
+
+                    ready: function () {
+                        ready.start(
+                            {previous_event: eventGraph.instructions}, 
+                            function () { setTimeout(function () { eventGraph.studying() }, 100)}
+                        )
+                    },
+
+                    // CHANGED from classification.start to study.start
+                    studying: function () {
+                        study.start(
+                            study_params, 
+                            function () { setTimeout( function () { eventGraph.instructions2() },500)}
+                        )
+                    },
+
+                    instructions2: function () {
+                        instructions.start(
+                            {text: '<font size="+3"><div style="text-align: justify;">Now it is time to move to the next phase: You will be asked to decide if new shapes are Alphas. There will not be corrective feedback.<div></font>'},
+                            function () { setTimeout(function () { eventGraph.ready2() }, 100)}
+                        )
+                    },
+
+                    ready2: function () {
+                        ready.start(
+                            {previous_event: eventGraph.instructions2}, 
+                            function () { setTimeout(function () { eventGraph.test() }, 100)}
+                        )
+                    },
+
+                    test: function () {
+                        classification.start(
+                            test_params, 
+                            function () { setTimeout( function () { eventGraph.instrTypicality() },500)} // Routes to typicality now
+                        )
+                    },
+
+                    
+                instrTypicality: function () {
+                    instructions.start(
+                        {text: '<font size="+3" margin = 20px><div style="text-align: center;">In the next phase of the experiment, you will be asked to judge how well the item represents its category. You are not judging how frequent or familiar the example is and you are not judging how confident you are that it belongs to the category. An object that is highly typical is one that represents the category very well.</div> '}, // params
+                        function () { setTimeout(function () { // what to do next
+                            eventGraph.typicalityPhase()
+                        }, 100)}
+                    )
+                },
+                    
+                    // ADDED TYPICALITY PHASE
+                    typicalityPhase: function () {
+                        typicality.start(
+                            typicality_params1,
+                            function () { setTimeout( function () { eventGraph.end() },500)}
+                        )
+                    },
+                    
+                    end: function () {
+                        instructions.start({text: 'All Finished!'}, function () {
+                            save(subject)
+                        })
+                    },
+                }
+                eventGraph.instructions()
+            }
+
+
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// CONDITION 3!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (['3'].includes(subject['condition'])) {
+                eventGraph = {
+                    instructions: function () {
+                        instructions.start(
+                            {text: '<font size="+3" margin = 20px><div style="text-align: center;">Welcome to the experiment; glad you could join.</div><br><br><div style="text-align: justify;">You will be shown a set of examples from a domain of geometric shapes. Each example will either belong to a class of shapes called the "Alpha" category or will not belong to the "Alpha" category. Your task is to learn how to tell whether a shape is an Alpha or not. You will be shown the correct answer after each response to help you learn. At first you will just have to guess, but you will gain experience as you go. It may not be easy, but before long you should develop a good sense of how to decide what type of shape is presented. After you complete your training, you will be asked to apply your knowledge to a set of shapes that includes ones that have not been classified.<div><br><br> <div style="text-align: center;">Good luck!<div></font> '}, // params
+                            function () { setTimeout(function () { // what to do next
+                                eventGraph.ready()
+                            }, 100)}
+                        )
+                    },
+
+                    ready: function () {
+                        ready.start(
+                            {previous_event: eventGraph.instructions}, // params
+                            function () { setTimeout(function () { // what to do next
+                                eventGraph.training()
+                            }, 100)}
+                        )
+                    },
+
+                    training: function () {
+                        classification.start(
+                            train_params, // params
+                            function () { setTimeout( function () { // what to do next
+                                eventGraph.instructions2()
+                            },500)}
+                        )
+                    },
+
+                    instructions2: function () {
+                        instructions.start(
+                            {text: '<font size="+3"><div style="text-align: justify;">Now it is time to move to the next phase: You will be asked to use your knowledge to decide which type of geometric shape is being presented. Some of the geometric shapes will be exactly the same as those in the training phase, but some will be completely new. Since some unclassified geometric shapes will be included in this phase, there will not be corrective feedback as you had in training.<div></font>'}, // params
+                            function () { setTimeout(function () { // what to do next
+                                eventGraph.ready2()
+                            }, 100)}
+                        )
+                    },
+
+                    ready2: function () {
+                        ready.start(
+                            {previous_event: eventGraph.instructions}, // params
+                            function () { setTimeout(function () { // what to do next
+                                eventGraph.test()
+                            }, 100)}
+                        )
+                    },
+
+                    test: function () {
+                        classification.start(
+                            test_params, // params
+                            function () { setTimeout( function () { // what to do next
+                                eventGraph.instrTypicality()
+                            },500)}
+                        )
+                    },
+
+                    instrTypicality: function () {
+                    instructions.start(
+                        {text: '<font size="+3" margin = 20px><div style="text-align: center;">In the next phase of the experiment, you will be asked to judge how well the item represents its category. You are not judging how frequent or familiar the example is and you are not judging how confident you are that it belongs to the category. An object that is highly typical is one that represents the category very well.</div> '}, // params
+                        function () { setTimeout(function () { // what to do next
+                            eventGraph.typicalityPhase()
+                        }, 100)}
+                    )
+                },
+
+                    // ADDED TYPICALITY PHASE
+                    typicalityPhase: function () {
+                        typicality.start(
+                            typicality_params1,
+                            function () { setTimeout( function () { eventGraph.end() },500)}
+                        )
+                    },
+                    
+                    
+                    end: function () {
+                        instructions.start({text: 'All Finished!'}, function () {
+                            save(subject)
+                        })
+                    },
+                }
+
+                // initialize first event
+                eventGraph.instructions()
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </script>
+
+    </body>
+</html>

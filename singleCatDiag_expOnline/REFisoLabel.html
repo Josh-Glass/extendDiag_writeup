@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+
+        <!-- imports -->
+        <script src="static/utils.js"></script>
+        <script src='static/experiments/isoLabel/materials/ocanvas-2.10.0.js'></script>
+        <script src='static/experiments/isoLabel/instructions.js'></script>
+        <script src='static/experiments/isoLabel/ready.js'></script>
+       <script src='static/experiments/isoLabel/classification.js'></script>
+        <script src='static/experiments/isoLabel/dualBtnClassification.js'></script>
+        <script src='static/experiments/isoLabel/stimPair_Simultaneous.js'></script>
+        <script src='static/experiments/isoLabel/sort.js'></script>
+        <script src='static/experiments/isoLabel/typicality.js'></script>
+        <script src='static/experiments/isoLabel/study.js'></script>
+        <!-- ^ these are all the experiment phases we commonly use in the kurtz lab -->
+        <!-- <link href="static/testExp/materials/styles.css" rel="stylesheet" type="text/css"></link> -->
+
+    </head>
+    
+    <!-- <body style = 'margin-bottom: 0px; margin-top: 0px; margin-left: 0px; margin-right: 0px;'> -->
+    <body style = 'background: rgb(255, 255, 255);'>
+        <div id='main'></div>
+
+        <script type="text/javascript">
+            // window.onbeforeunload = function() { return "Are you sure you want to go back? Your data will not be saved"; } // <-- use this to warn users if they accidently hit the back button and delete all their data (its gunna save Gamma lot of headaches)
+
+            expId = 'isoLabel'
+
+            subject = {
+                //id: get_subject_id(),
+                //id: '{{ current_user.id }}',
+                id: '1',
+                //condition: get_condition(),
+               // condition: parseInt('{{ current_user.condition }}'), // 
+                condition: '3',
+                results: {
+                    'trainPhase': [],
+                    'testPhase': [],
+                    'typPhase': [],
+                }
+            }
+            
+
+            //this is just standard TACL training, Not sure which stim to leave out/set aside for the test phase
+            stim_train = {
+
+            }
+
+            labels_train = {
+ 
+            }
+
+
+
+            train_params = {
+                'objects': stim_train[subject['condition']],
+                'labels': labels_train[subject['condition']],
+                'categories': ['Gamma', 'Delta'],
+                'btnLabels': {'Gamma': 'Gamma', 'Delta': 'Delta'},
+                'n_blocks': 5,
+                'results': subject['results']['trainPhase'],
+                'feedback': true,
+            }
+
+
+
+
+
+
+            //test phase is the same for both conditions
+            stim_test = {
+
+
+
+            }
+
+            labels_test = {
+
+            }
+
+            test_params = {
+                'objects': stim_test[subject['condition']],
+                'labels': labels_test[subject['condition']],
+                'categories': ['Gamma', 'Delta'],
+                'btnLabels': {'Gamma': 'Alpha', 'Delta': 'Beta'},
+                'n_blocks': 1,
+                'results': subject['results']['testPhase'],
+                'feedback': false,
+            }
+
+
+
+
+
+            //typicality phase is the same for both conditions
+            stim_typ = {
+
+                
+             }
+
+            labels_typ = {
+  
+        
+            }
+
+
+            typicality_params = {
+                'objects': stim_typ[subject['condition']],
+                'labels': labels_typ[subject['condition']],
+                'n_blocks': 1,
+                'results': subject['results']['typPhase'],
+                'sliderBins': 13,
+                'binLabels': ['A7','A6','A5','A4','A3','A2','A1','B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7']
+            }
+
+            
+
+
+            /** - - - Run Experiment via an Event Object - - - **/
+            //event graph for the TACL condition
+            eventGraph = {
+                instructions: function () {
+                    instructions.start(
+                        {text: '<font size="+3"><div style="text-align: center;">Welcome to the experiment; glad you could join.</div><br><br><div style="text-align: justify;">You will be shown Gamma set of examples from Gamma domain of batteries. Each example will belong to one of two types:  Alphas and Betas. Your task is to learn how to tell whether Gamma battery is an Alpha or Gamma Beta. You will be shown the correct answer after each response to help you learn. At first you will just have to guess, but you will gain experience as you go. It may not be easy, but before long you should develop Gamma good sense of how to decide what type of battery is presented. After you complete your training, you will be asked to apply your knowledge to Gamma set of batteries that includes ones that have not been classified.<div><br><br> <div style="text-align: center;">Good luck!<div></font> '}, // params
+                        function () { setTimeout(function () { // what to do next
+                            eventGraph.ready()
+                        }, 100)}
+                    )
+                },
+
+                ready: function () {
+                    ready.start(
+                        {previous_event: eventGraph.instructions}, // params
+                        function () { setTimeout(function () { // what to do next
+                            eventGraph.training()
+                        }, 100)}
+                    )
+                },
+
+                training: function () {
+                    classification.start(
+                        train_params, // params
+                        function () { setTimeout( function () { // what to do next
+                            eventGraph.instructions2()
+                        },500)}
+                    )
+                },
+
+                instructions2: function () {
+                    instructions.start(
+                        {text: '<font size="+3"><div style="text-align: justify;">Now it is time to move to the next phase: You will be asked to use your knowledge to decide which type of battery is being presented. Some of the batteries will be exactly the same as those in the training phase, but some will be completely new. Since some unclassified batteries will be included in this phase, there will not be corrective feedback as you had in training.<div></font>'}, // params
+                        function () { setTimeout(function () { // what to do next
+                            eventGraph.ready2()
+                        }, 100)}
+                    )
+                },
+
+                ready2: function () {
+                    ready.start(
+                        {previous_event: eventGraph.instructions}, // params
+                        function () { setTimeout(function () { // what to do next
+                            eventGraph.test()
+                        }, 100)}
+                    )
+                },
+
+                test: function () {
+                    classification.start(
+                        test_params, // params
+                        function () { setTimeout( function () { // what to do next
+                            eventGraph.instructions3()
+                        },500)}
+                    )
+                },
+
+
+                instructions3: function () {
+                    instructions.start(
+                        {text: '<font size="+3"><div style="text-align: justify;">In the next phase of the experiment, you will be asked to judge how well the item represents its category. You are not judging how frequent or familiar the example is, and you are not judging how confident you are that it belongs to the category. An object that is highly typical is one that represents the category very well.<div></font>'}, // params
+                        function () { setTimeout(function () { // what to do next
+                            eventGraph.ready3()
+                        }, 100)}
+                    )
+                },
+
+                ready3: function () {
+                    ready.start(
+                        {previous_event: eventGraph.instructions}, // params
+                        function () { setTimeout(function () { // what to do next
+                            eventGraph.typicality()
+                        }, 100)}
+                    )
+                },
+
+                typicality: function () {
+                    typicality.start(
+                        typicality_params, // params
+                        function () { setTimeout( function () { // what to do next
+                            eventGraph.end()
+                        },500)}
+                    )
+                },
+
+               
+                end: function () {
+                    instructions.start({text: 'All Finished!'}, function () {
+                        viewData(JSON.stringify(subject['results']), 'Downloads/test.txt', 'text/plain') // <-- spits out the data if you want to look at it; this is whats going to get sent to the server
+                        next(expId, subject['id'], subject['condition'], subject) // <-- send data to server and start next experiment | this comes from the "utils.js" script
+                    })
+                },
+            }
+
+
+
+
+
+            // initialize first event
+            eventGraph.instructions()
+
+
+        </script>
+
+    </body>
+</html>

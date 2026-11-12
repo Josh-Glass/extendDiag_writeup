@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+
+        <!-- imports -->
+        
+        <!-- webrunner dependency -->
+        <!-- imports -->
+        <script src="static/utils.js"></script>
+        <script src='static/experiments/singleCatDiag/materials/ocanvas-2.10.0.js'></script>
+        <script src='static/experiments/singleCatDiag/instructions.js'></script>
+        <script src='static/experiments/singleCatDiag/ready.js'></script>
+       <script src='static/experiments/singleCatDiag/classification.js'></script>
+        <script src='static/experiments/singleCatDiag/dualBtnClassification.js'></script>
+        <script src='static/experiments/singleCatDiag/stimPair_Simultaneous.js'></script>
+        <script src='static/experiments/singleCatDiag/sort.js'></script>
+        <script src='static/experiments/singleCatDiag/typicality.js'></script>
+        <script src='static/experiments/singleCatDiag/generative_study.js'></script>
+        <!-- ^ these are all the experiment phases we commonly use in the kurtz lab -->
+        <!-- <link href="static/testExp/materials/styles.css" rel="stylesheet" type="text/css"></link> -->
+
+        <style>
+            #instructions{
+
+                margin-left: 40px;
+                margin-right: 40px;
+                font-size: x-large;
+
+            }
+        </style>
+
+
+
+
+    </head>
+    
+    <!-- <body style = 'margin-bottom: 0px; margin-top: 0px; margin-left: 0px; margin-right: 0px;'> -->
+    <body>
+        <div id='main'></div>
+
+        <script type="text/javascript">
+            // window.onbeforeunload = function() { return "Are you sure you want to go back? Your data will not be saved"; } // <-- use this to warn users if they accidently hit the back button and delete all their data (its gunna save a lot of headaches)
+
+            expId = 'singleCatDiag'
+
+            
+
+            subject = {
+                id: '{{ current_user.id }}', // <-- Uncomment for live Flask server
+                //id: '1',                        // <-- Hardcoded for local testing
+                condition: '{{ current_user.condition }}', // <-- Uncomment for live Flask server
+                //condition: '1',                 // <-- Hardcoded for local testing
+                results: {
+                    'study': [],
+                    'trainPhase': [],
+                    'testPhase': [],
+                    'typicality': [],
+                }
+            }
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// HERE IS ALL THE GENERATIVE STUDY PHASE SET UP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+// Includes single cat diag generative study phase (cond2)
+// OBSERVATIONAL/GENERATIVE STUDY PHASE
+
+stim_generative_study = {
+    // Instead of .png paths, we pass the exact [Size, Shading] coordinates from your Python dataA array
+    1: [
+        [0.250, 0.050], // A1
+        [0.325, 0.125], // A2
+        [0.400, 0.200], // A3
+        [0.475, 0.275], // A4
+        [0.550, 0.350], // A5
+        [0.625, 0.425], // A6
+        [0.700, 0.500]  // A7
+    ],
+}
+
+labels_generative_study = {
+    1: ['a', 'a', 'a', 'a', 'a', 'a', 'a'], 
+}
+
+generative_study_params = {
+    'objects': stim_generative_study[subject['condition']], 
+    'labels': labels_generative_study[subject['condition']], 
+    'categories': ['a'],
+    'btnLabels': {'a': 'Alpha'},
+    'n_blocks': 1, // Change this if you want them to loop through the 7 items multiple times
+    'results': subject['results']['study'],
+    'feedback': true, 
+    'finish_early': false // Assuming you don't want them to skip out early in the study phase
+}
+
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// HERE IS ALL THE Classification TRAINING PHASE SET UP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+//Includes top-middle-bottom (cond1) and single cat diag ANotA (cond3)
+
+            stim_train = {
+                2: [
+                        //HERE ARE THE A's
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A1.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A2.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A3.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A4.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A5.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A6.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A7.png',
+
+
+                        //HERE ARE THE NotA's
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA1.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA2.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA3.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA4.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA5.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA6.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA7.png',
+
+                ],    
+            }
+
+            labels_train = {
+                2: [
+                    'a', 'a', 'a', 'a', 'a', 'a','a',
+                    'NotA', 'NotA', 'NotA', 'NotA', 'NotA', 'NotA', 'NotA'
+                ],
+            }
+
+            train_params = {
+                'objects': stim_train[subject['condition']],
+                'labels': labels_train[subject['condition']],
+                'categories': subject['condition'] === '1' ? ['a', 'b'] : ['a', 'NotA'],
+                'btnLabels': subject['condition'] === '1' ? {'a': 'Alpha', 'b': 'Beta'} : {'a': 'Yes, Alpha', 'NotA': 'No, Not Alpha'} ,
+                'n_blocks': 8,
+                'results': subject['results']['trainPhase'],
+                'feedback': true,
+                'finish_early': true,
+                'lookback': 14,
+                'finish_early_criterion': 1.0,
+                'min_blocks': 0,
+                'one_class': subject['condition'] === '1' ? false : true
+            }
+
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// HERE IS THE  Classification TEST PHASE SET UP !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+// single cat diag Observational (cond2), and single cat diag ANotA (cond3)
+            
+            stim_test = {
+            //CONDITION 2: Single Cat Observational Test
+            1: [
+                // The 7 A items
+                'static/experiments/singleCatDiag/materials/single_cat_obs/A1.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/A2.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/A3.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/A4.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/A5.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/A6.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/A7.png',
+                // Plus your Test/Transfer items (X and Y diagonals)
+                //X
+                'static/experiments/singleCatDiag/materials/single_cat_obs/X1.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/X2.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/X3.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/X4.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/X5.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/X6.png',
+                //Y
+                'static/experiments/singleCatDiag/materials/single_cat_obs/Y1.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/Y2.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/Y3.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/Y4.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/Y5.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/Y6.png',
+
+            ],
+            //CONDITION 3: A vs Not A Test
+            2: [
+                        //HERE ARE THE A's
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A1.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A2.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A3.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A4.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A5.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A6.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A7.png',
+
+                        //HERE ARE THE NotA's
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA1.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA2.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA3.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA4.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA5.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA6.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA7.png',
+
+
+                        // Plus your Test/Transfer items
+                        // X
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/X1.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/X2.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/X3.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/X4.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/X5.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/X6.png',
+                        // Y
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/Y1.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/Y2.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/Y3.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/Y4.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/Y5.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/Y6.png',
+            ],
+            }
+
+
+
+
+
+
+            labels_test = {
+                1: ['a', 'a', 'a', 'a', 'a', 'a', 'a', 
+        'x', 'x', 'x', 'x', 'x', 'x',
+        'y', 'y', 'y', 'y', 'y', 'y',],
+
+                2: ['a', 'a', 'a', 'a', 'a', 'a', 'a', 
+        'NotA', 'NotA', 'NotA', 'NotA', 'NotA', 'NotA', 'NotA',
+        'x', 'x', 'x', 'x', 'x', 'x',
+        'y', 'y', 'y', 'y', 'y', 'y',],
+            }
+
+            // Keep test_params as you had it, but for Cond 2 & 3 we need to make sure the buttons show 'Not A' if we are in condition 3
+            test_params = {
+                'objects': stim_test[subject['condition']],
+                'labels': labels_test[subject['condition']],
+                'categories': subject['condition'] === '1' ? ['a', 'b'] : ['a', 'NotA'],
+                'btnLabels': subject['condition'] === '1' ? {'a': 'Alpha', 'b': 'Beta'} : {'a': 'Yes, Alpha', 'NotA': 'No, Not Alpha'} ,
+                'n_blocks': 1,
+                'results': subject['results']['testPhase'],
+                'feedback': false,
+                'one_class': subject['condition'] === '1' ? false : true
+            }
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// HERE IS THE  Tpyicality PHASE SET UP !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+// single cat diag Observational (cond2), and single cat diag ANotA (cond3)
+
+
+            stim_typ1 = {
+
+                1: [
+                // The 7 A items
+                'static/experiments/singleCatDiag/materials/single_cat_obs/A1.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/A2.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/A3.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/A4.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/A5.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/A6.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/A7.png',
+                // Plus your Test/Transfer items (X and Y diagonals)
+                //X
+                'static/experiments/singleCatDiag/materials/single_cat_obs/X1.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/X2.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/X3.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/X4.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/X5.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/X6.png',
+                //Y
+                'static/experiments/singleCatDiag/materials/single_cat_obs/Y1.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/Y2.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/Y3.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/Y4.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/Y5.png',
+                'static/experiments/singleCatDiag/materials/single_cat_obs/Y6.png',
+
+                ],
+
+                2: [
+
+                        //HERE ARE THE A's
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A1.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A2.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A3.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A4.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A5.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A6.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/A7.png',
+
+                        //HERE ARE THE NotA's
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA1.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA2.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA3.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA4.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA5.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA6.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/NotA7.png',
+
+
+                        // Plus your Test/Transfer items
+                        // X
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/X1.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/X2.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/X3.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/X4.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/X5.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/X6.png',
+                        // Y
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/Y1.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/Y2.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/Y3.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/Y4.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/Y5.png',
+                        'static/experiments/singleCatDiag/materials/single_cat_ANOTA/Y6.png',
+                ],
+
+            }
+
+            labels_typ1 = {
+        1: ['Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 
+            'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha',
+            'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha',], 
+
+
+        2: ['Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 
+            'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha',
+            'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha',
+            'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha', 'Alpha',]
+        
+            }
+
+            typicality_params1 = {
+                'objects': stim_typ1[subject['condition']],
+                'labels': labels_typ1[subject['condition']],
+                'n_blocks': 1,
+                'results': subject['results']['typicality'],
+                'sliderBins': 6,
+                'binLabels': ['1','2','3','4','5','6','7',]
+            }
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// HERE IS ALL THE Event LOGIC!!!!!!!!!!!!!!!!!!!!! !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// CONDITION 1!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+if (['1'].includes(subject['condition'])) {
+                eventGraph = {
+                    instructions: function () {
+                        instructions.start(
+                            {text: '<font size="+3" margin = 20px><div style="text-align: center;">Welcome to the experiment.</div><br><br><div style="text-align: justify;">Your task is to learn about a category of geometric shapes that vary along two dimensions (size and shading) called the "Alpha" category. To do this you will be trying to create Alphas yourself by adjusting size and shading values. Later, you will later be tested on your knowledge of the Alpha category.<div><br><br> <div style="text-align: center;">Good luck!<div></font> '}, 
+                            function () { setTimeout(function () { eventGraph.ready() }, 100)}
+                        )
+                    },
+
+                    ready: function () {
+                        ready.start(
+                            {previous_event: eventGraph.instructions}, 
+                            function () { setTimeout(function () { eventGraph.studying() }, 100)}
+                        )
+                    },
+
+                    // CHANGED from classification.start to study.start
+                    studying: function () {
+                        study.start(
+                            generative_study_params, 
+                            function () { setTimeout( function () { eventGraph.instructions2() },500)}
+                        )
+                    },
+
+                    instructions2: function () {
+                        instructions.start(
+                            {text: '<font size="+3"><div style="text-align: justify;">Now it is time to move to the next phase: You will be asked to decide if new shapes are Alphas. There will not be corrective feedback.<div></font>'},
+                            function () { setTimeout(function () { eventGraph.ready2() }, 100)}
+                        )
+                    },
+
+                    ready2: function () {
+                        ready.start(
+                            {previous_event: eventGraph.instructions2}, 
+                            function () { setTimeout(function () { eventGraph.test() }, 100)}
+                        )
+                    },
+
+                    test: function () {
+                        classification.start(
+                            test_params, 
+                            function () { setTimeout( function () { eventGraph.instrTypicality() },500)} // Routes to typicality now
+                        )
+                    },
+
+                    
+                    instrTypicality: function () {
+                        instructions.start(
+                            {text: '<font size="+3" margin = 20px><div style="text-align: center;">In the next phase of the experiment, you will be asked to judge how well the item represents its category. You are not judging how frequent or familiar the example is and you are not judging how confident you are that it belongs to the category. An object that is highly typical is one that represents the category very well.</div> '}, // params
+                            function () { setTimeout(function () { // what to do next
+                                eventGraph.typicalityPhase()
+                            }, 100)}
+                        )
+                    },
+                    
+                    // ADDED TYPICALITY PHASE
+                    typicalityPhase: function () {
+                        typicality.start(
+                            typicality_params1,
+                            function () { setTimeout( function () { eventGraph.end() },500)}
+                        )
+                    },
+                    
+                    end: function () {
+                        instructions.start({text: 'All Finished!'}, function () {
+
+                            // 1. Structure the data nicely
+                           // let cleanData = structureData(subject['results']);
+                            
+                            // 2. Download the readable version
+                            //viewData(cleanData, `subject_${subject['id']}_cond_${subject['condition']}_data.json`);
+                           // viewData(JSON.stringify(subject['results']), 'Downloads/test.txt', 'text/plain') // Debugging text file
+                            next(expId, subject['id'], subject['condition'], subject) // Send to Flask server
+                        })
+                    },
+                }
+                eventGraph.instructions()
+            }
+
+
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// CONDITION 2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (['2'].includes(subject['condition'])) {
+                eventGraph = {
+                    instructions: function () {
+                        instructions.start(
+                            {text: '<font size="+3" margin = 20px><div style="text-align: center;">Welcome to the experiment; glad you could join.</div><br><br><div style="text-align: justify;">You will be shown a set of examples from a domain of geometric shapes. Each example will either belong to a class of shapes called the "Alpha" category or will not belong to the "Alpha" category. Your task is to learn how to tell whether a shape is an Alpha or not. You will be shown the correct answer after each response to help you learn. At first you will just have to guess, but you will gain experience as you go. It may not be easy, but before long you should develop a good sense of how to decide what type of shape is presented. After you complete your training, you will be asked to apply your knowledge to a set of shapes that includes ones that have not been classified.<div><br><br> <div style="text-align: center;">Good luck!<div></font> '}, // params
+                            function () { setTimeout(function () { // what to do next
+                                eventGraph.ready()
+                            }, 100)}
+                        )
+                    },
+
+                    ready: function () {
+                        ready.start(
+                            {previous_event: eventGraph.instructions}, // params
+                            function () { setTimeout(function () { // what to do next
+                                eventGraph.training()
+                            }, 100)}
+                        )
+                    },
+
+                    training: function () {
+                        classification.start(
+                            train_params, // params
+                            function () { setTimeout( function () { // what to do next
+                                eventGraph.instructions2()
+                            },500)}
+                        )
+                    },
+
+                    instructions2: function () {
+                        instructions.start(
+                            {text: '<font size="+3"><div style="text-align: justify;">Now it is time to move to the next phase: You will be asked to use your knowledge to decide which type of geometric shape is being presented. Some of the geometric shapes will be exactly the same as those in the training phase, but some will be completely new. Since some unclassified geometric shapes will be included in this phase, there will not be corrective feedback as you had in training.<div></font>'}, // params
+                            function () { setTimeout(function () { // what to do next
+                                eventGraph.ready2()
+                            }, 100)}
+                        )
+                    },
+
+                    ready2: function () {
+                        ready.start(
+                            {previous_event: eventGraph.instructions}, // params
+                            function () { setTimeout(function () { // what to do next
+                                eventGraph.test()
+                            }, 100)}
+                        )
+                    },
+
+                    test: function () {
+                        classification.start(
+                            test_params, // params
+                            function () { setTimeout( function () { // what to do next
+                                eventGraph.instrTypicality()
+                            },500)}
+                        )
+                    },
+
+                    instrTypicality: function () {
+                    instructions.start(
+                        {text: '<font size="+3" margin = 20px><div style="text-align: center;">In the next phase of the experiment, you will be asked to judge how well the item represents its category. You are not judging how frequent or familiar the example is and you are not judging how confident you are that it belongs to the category. An object that is highly typical is one that represents the category very well.</div> '}, // params
+                        function () { setTimeout(function () { // what to do next
+                            eventGraph.typicalityPhase()
+                        }, 100)}
+                    )
+                },
+
+                    // ADDED TYPICALITY PHASE
+                    typicalityPhase: function () {
+                        typicality.start(
+                            typicality_params1,
+                            function () { setTimeout( function () { eventGraph.end() },500)}
+                        )
+                    },
+                    
+                    
+                    end: function () {
+                        instructions.start({text: 'All Finished!'}, function () {
+
+
+                            // 1. Structure the data nicely
+                            //let cleanData = structureData(subject['results']);
+                            
+                            // 2. Download the readable version
+                            //viewData(cleanData, `subject_${subject['id']}_cond_${subject['condition']}_data.json`);
+                            //viewData(JSON.stringify(subject['results']), 'Downloads/test.txt', 'text/plain') // Debugging text file
+                            next(expId, subject['id'], subject['condition'], subject) // Send to Flask server
+                        })
+                    },
+                }
+
+                // initialize first event
+                eventGraph.instructions()
+            }
+
+
+        </script>
+
+    </body>
+</html>
