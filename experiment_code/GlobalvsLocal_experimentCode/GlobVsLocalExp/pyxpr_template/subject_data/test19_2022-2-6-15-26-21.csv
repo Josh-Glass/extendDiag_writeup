@@ -1,0 +1,9 @@
+pnum,phase_id,condition,block_data,trial_num,stim,correct_category,response,hit,rt,criterian,met_criterian,num_correct_in_block
+test19,training_phase_1,1,1,1,materials/images/blueB6.png,Beta,Alpha,False,2.6449914000113495,11,False,0
+test19,training_phase_1,1,1,2,materials/images/redA6.png,Alpha,Alpha,True,2.3221456999890506,11,False,1
+test19,training_phase_1,1,1,3,materials/images/redA5.png,Alpha,Alpha,True,2.3892746999918018,11,False,2
+test19,training_phase_1,1,1,4,materials/images/redA4.png,Alpha,Alpha,True,2.1468836000130977,11,False,3
+test19,training_phase_1,1,1,5,materials/images/redA3.png,Alpha,Alpha,True,2.654280300019309,11,False,4
+test19,training_phase_1,1,1,6,materials/images/blueB4.png,Beta,Alpha,False,1.7360415000002831,11,False,4
+test19,training_phase_1,1,1,7,materials/images/redA2.png,Alpha,Alpha,True,2.3020803999970667,11,False,5
+test19,training_phase_1,1,1,8,materials/images/blueB5.png,Beta,Alpha,False,2.5612546000047587,11,False,5

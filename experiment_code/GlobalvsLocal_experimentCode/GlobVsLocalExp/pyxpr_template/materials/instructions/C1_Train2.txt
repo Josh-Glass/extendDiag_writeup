@@ -1,0 +1,4 @@
+Now you will be trained again.  This training will include the original types of geometric shapes (Alphas and Betas), but two more types will be added: Gammas and Deltas.
+Your task is to learn how to tell whether a shape is an Alpha, Beta, Gamma, or Delta. You will be shown the correct answer after each response to help you learn. At first you will just have to guess, but you will gain experience as you go. This phase is challenging: you may find it frsutrating, but just try your best.
+
+Good Luck!

@@ -1,0 +1,8 @@
+You will be shown a set of examples from a domain of geometric shapes. Each example belongs to one of four distinct types:  Alphas, Betas, Gamma, and Deltas.  To begin with, you will be shown only two of the types.  So each example will belong to one of two groups:  Alphas and Betas.  Your initial task is to learn how to tell whether a shape is an Alpha or a Beta.  
+
+You will be shown the correct answer after each response to help you learn. At first you will just have to guess, but you will gain experience as you go. It may not be easy, but before long you should develop a good sense of how to decide what type of shape is presented.  After you complete the first part of training you will be asked to apply your knowledge to a set of shapes that have not been classified.
+
+Then you will be ready to move on to learning about the full domain including the other two types: Gammas and Deltas.  By the end of training you will be prepared to successfully classify any example in the domain.
+
+
+Good Luck!

@@ -1,0 +1,6 @@
+You will be shown a set of examples from a domain of geometric shapes. Each example will belong to one of two types:  Alphas and Betas.
+
+Your task is to learn how to tell whether a shape is an Alpha or a Beta. You will be shown the correct answer after each response to help you learn. At first you will just have to guess, but you will gain experience as you go. It may not be easy, but before long you should develop a good sense of how to decide what type of shape is presented. After you complete your training, you will be asked to apply your knowledge to a set of shapes that includes ones that have not been classified.
+
+
+Good luck!

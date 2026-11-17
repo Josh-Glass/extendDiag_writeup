@@ -1,0 +1,4 @@
+pnum,phase_id,condition,block_data,trial_num,stim,correct_category,response,hit,rt,criterian,met_criterian,num_correct_in_block
+,training_phase_1,2,1,1,materials/images/blueB4.png,Beta,Beta,True,1.6949956999887945,11,False,1
+,training_phase_1,2,1,2,materials/images/blueB6.png,Beta,Alpha,False,1.13886750000529,11,False,1
+,training_phase_1,2,1,3,materials/images/blueB2.png,Beta,Beta,True,0.16173419999540783,11,False,2

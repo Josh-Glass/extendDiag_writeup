@@ -1,0 +1,3 @@
+For this part of the study, you will again decide the category you think each example belongs to. This time you will not receive feedback.
+
+After deciding which category you think the object belongs to, you will also be asked to judge how well the item represents its category.  To rate each object's typicality, you will indicate how much the example is like the rest of its category.  You are _not_ judging how frequent or familiar the example is and you are _not_  judging how confident you are that it belongs to the category.  An object that is highly typical is one that represents the category very well, while an object that is low in typicality is a member of the category that is distinctive or unusual.
