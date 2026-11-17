@@ -7,8 +7,8 @@ import seaborn as sns
 # 1. LOAD DATA & CALCULATE SAMPLE SIZES
 # ==========================================
 # Load the generated CSV files
-df_cond1 = pd.read_csv('condition_1_study.csv')
-df_cond2 = pd.read_csv('condition_2_trainPhase.csv')
+df_cond1 = pd.read_csv('single_cat_diag_data/condition_1_study.csv')
+df_cond2 = pd.read_csv('single_cat_diag_data/condition_2_trainPhase.csv')
 
 # Calculate unique subjects dynamically
 n_cond1 = df_cond1['subject_id'].nunique()

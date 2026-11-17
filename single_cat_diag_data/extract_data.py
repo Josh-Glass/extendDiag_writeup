@@ -1,7 +1,7 @@
 import json
 import pandas as pd
 import glob
-
+print("hello!!!!")
 def load_json(filepath):
     with open(filepath, 'r') as f:
         return json.load(f)
@@ -28,7 +28,7 @@ agg_data = {
 }
 
 # Loop through all JSON files in your 'data' folder
-for filepath in glob.glob('data/*.json'):
+for filepath in glob.glob('single_cat_diag_data/data/*.json'):
     data = load_json(filepath)
     
     # Extract metadata

@@ -1,0 +1,2 @@
+# Auto-detect text files and normalize all of them to LF on commit and checkout
+* text=auto eol=lf
