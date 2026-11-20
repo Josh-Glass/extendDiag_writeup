@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # 1. Load Test Phase Data
-df_cond1 = pd.read_csv('condition_1_testPhase.csv')
-df_cond2 = pd.read_csv('condition_2_testPhase.csv')
+df_cond1 = pd.read_csv('single_cat_diag_data/condition_1_testPhase.csv')
+df_cond2 = pd.read_csv('single_cat_diag_data/condition_2_testPhase.csv')
 
 # Calculate Sample Sizes
 n_cond1 = df_cond1['subject_id'].nunique()
@@ -95,5 +95,5 @@ cbar = fig.colorbar(scatter, cax=cbar_ax)
 cbar.set_label('Proportion Categorized as "Alpha"', fontsize=13, labelpad=15)
 
 plt.subplots_adjust(right=0.9)
-plt.savefig('test_phase_spatial_heatmap.png', bbox_inches='tight', dpi=300)
+plt.savefig('single_cat_diag_data/test_phase_spatial_heatmap.png', bbox_inches='tight', dpi=300)
 # plt.show()

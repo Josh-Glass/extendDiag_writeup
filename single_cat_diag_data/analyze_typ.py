@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # 1. Load Typicality Data
-df_cond1_typ = pd.read_csv('condition_1_typicality.csv')
-df_cond2_typ = pd.read_csv('condition_2_typicality.csv')
+df_cond1_typ = pd.read_csv('single_cat_diag_data/condition_1_typicality.csv')
+df_cond2_typ = pd.read_csv('single_cat_diag_data/condition_2_typicality.csv')
 
 # Ensure responses are numeric
 df_cond1_typ['response'] = pd.to_numeric(df_cond1_typ['response'], errors='coerce')
@@ -96,5 +96,5 @@ cbar = fig.colorbar(scatter, cax=cbar_ax)
 cbar.set_label('Typicality Rating (0 = Low, 6 = High)', fontsize=13, labelpad=15)
 
 plt.subplots_adjust(right=0.9)
-plt.savefig('typicality_spatial_heatmap.png', bbox_inches='tight', dpi=300)
+plt.savefig('single_cat_diag_data/typicality_spatial_heatmap.png', bbox_inches='tight', dpi=300)
 # plt.show()

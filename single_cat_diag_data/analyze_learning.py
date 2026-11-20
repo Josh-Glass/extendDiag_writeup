@@ -66,7 +66,7 @@ for ax in axes:
     ax.set_xticks(range(int(trial_agg['trial'].max() + 1)))
 
 plt.tight_layout()
-plt.savefig('generative_training_analysis.png', bbox_inches='tight', dpi=300)
+plt.savefig('single_cat_diag_data/generative_training_analysis.png', bbox_inches='tight', dpi=300)
 print(f"Saved generative_training_analysis.png (n={n_cond1})")
 
 # ==========================================
@@ -91,7 +91,7 @@ plt.ylim(-0.05, 1.05)
 plt.xticks(range(int(learning_cond2['block'].max() + 1)))
 
 plt.tight_layout()
-plt.savefig('classification_training_analysis.png', bbox_inches='tight', dpi=300)
+plt.savefig('single_cat_diag_data/classification_training_analysis.png', bbox_inches='tight', dpi=300)
 print(f"Saved classification_training_analysis.png (n={n_cond2})")
 
 # Optional: plt.show() if you are running this interactively in Jupyter/Spyder

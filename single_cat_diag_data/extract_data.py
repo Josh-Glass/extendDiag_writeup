@@ -51,6 +51,6 @@ for cond, phases_dict in agg_data.items():
     for phase, dfs in phases_dict.items():
         if dfs: # If there's data for this condition and phase
             combined_df = pd.concat(dfs, ignore_index=True)
-            filename = f"condition_{cond}_{phase}.csv"
+            filename = f"single_cat_diag_data/condition_{cond}_{phase}.csv"
             combined_df.to_csv(filename, index=False)
             print(f"Successfully saved {filename} with {len(combined_df)} total rows.")
