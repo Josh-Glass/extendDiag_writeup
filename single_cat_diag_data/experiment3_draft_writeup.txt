@@ -52,9 +52,77 @@ Upon completing all phases, subjects were thanked and debriefed about the purpos
 
 RESULTS
 
-[TO BE COMPLETED]
+Participants and Data Exclusion
+
+A total of 76 participants were recruited for Experiment 3, with 44 assigned to the Generative Study condition and 50 to the Classification condition. To ensure that analyses focused on participants who successfully acquired category knowledge, we applied a learning criterion based on test phase performance. Specifically, we retained only participants who achieved at least 80% accuracy on the seven trained Alpha items during the test phase. This criterion excluded 12 participants from the Generative Study condition and 24 from the Classification condition, resulting in final samples of 32 participants in the Generative Study condition and 26 in the Classification condition.
+
+Training Phase Performance
+
+Participants in both conditions showed evidence of successful learning during the training phase. In the Generative Study condition, participants attempted to recreate target Alpha items by adjusting size and shading sliders. Across the seven training trials, mean error distance decreased from initial attempts, and participants required fewer attempts to match targets as they progressed through the study phase. Mean reaction times also decreased across trials, suggesting increasing familiarity with the category structure.
+
+In the Classification condition, participants learned to distinguish Alpha items from Not Alpha items through supervised classification with feedback. Learning curves showed steady improvement across training blocks, with mean accuracy increasing from approximately 65% in the first block to over 90% by the final blocks. Participants who achieved perfect accuracy (14/14 correct) on any block after the minimum training period were allowed to advance early to the test phase. For participants who finished early, we imputed their performance on remaining blocks as maintaining criterion-level accuracy to avoid artificially deflating the learning curve.
+
+Test Phase: Generalization to X and Y Items
+
+The critical test phase examined how participants generalized their category knowledge to novel items that either maintained the learned correlation (X items) or exhibited a parallel correlation (Y items). We analyzed the proportion of "Alpha" responses for X and Y items separately for each condition.
+
+Within-condition comparisons using paired t-tests revealed different patterns across the two learning modes. In the Generative Study condition, participants showed numerically higher endorsement of X items (M = 0.464, SD = 0.260) compared to Y items (M = 0.375, SD = 0.274), but this difference did not reach statistical significance, t(31) = 1.641, p = .111, Cohen's d = 0.340. In the Classification condition, participants also showed higher endorsement of X items (M = 0.699, SD = 0.333) compared to Y items (M = 0.609, SD = 0.377), with this difference approaching significance, t(25) = 1.860, p = .075, Cohen's d = 0.269.
+
+Between-condition comparisons using independent samples t-tests revealed that Classification condition participants endorsed both X and Y items as Alphas significantly more than Generative Study participants. For X items, Classification participants showed higher endorsement (M = 0.699) than Generative Study participants (M = 0.464), t(56) = -3.019, p = .004, Cohen's d = -0.797. Similarly, for Y items, Classification participants showed higher endorsement (M = 0.609) than Generative Study participants (M = 0.375), t(56) = -2.733, p = .008, Cohen's d = -0.722.
+
+Typicality Ratings
+
+The typicality rating phase provided an additional measure of category representation by asking participants to judge how well each item represented the Alpha category on a scale from 0 (not at all typical) to 6 (extremely typical).
+
+Within-condition comparisons revealed that both conditions showed significant differentiation between X and Y items in their typicality judgments. In the Generative Study condition, X items received significantly higher typicality ratings (M = 2.984, SD = 1.010) than Y items (M = 2.615, SD = 1.248), t(31) = 2.251, p = .032, Cohen's d = 0.366. In the Classification condition, this differentiation was even more pronounced, with X items rated as significantly more typical (M = 4.128, SD = 1.414) than Y items (M = 3.513, SD = 1.502), t(25) = 4.030, p < .001, Cohen's d = 0.435.
+
+Between-condition comparisons showed that Classification participants gave significantly higher typicality ratings than Generative Study participants for both item types. For X items, Classification participants provided higher ratings (M = 4.128) than Generative Study participants (M = 2.984), t(56) = -3.588, p < .001, Cohen's d = -0.947. For Y items, Classification participants also gave higher ratings (M = 3.513) than Generative Study participants (M = 2.615), t(56) = -2.488, p = .016, Cohen's d = -0.657.
 
 
 DISCUSSION
 
-[TO BE COMPLETED]
+Experiment 3 investigated how learning mode influences the development of coherence-based category representations by comparing generative study with discriminative classification training. The results reveal several important patterns that inform our understanding of when and how learners extract and utilize correlational structure in category learning.
+
+Evidence for Coherence-Based Generalization
+
+Both conditions showed some evidence of coherence-based generalization, as indicated by the tendency to differentiate between X items (which fall on the learned correlation line) and Y items (which fall on a parallel diagonal). This differentiation was clearest in the typicality rating data, where both conditions showed significant preferences for X over Y items. In the Classification condition, this differentiation also approached significance in the test phase generalization data. These patterns suggest that participants in both conditions extracted the correlational structure of the Alpha category to some degree and used this information to guide their judgments about novel items.
+
+However, the overall pattern of results does not provide strong support for robust coherence-based learning in either condition. The generalization rates to X items were relatively modest in both conditions, with the Generative Study condition showing only 46% endorsement and the Classification condition showing 70% endorsement. If participants had formed strong coherence-based representations that prioritized the learned correlation, we would expect much higher endorsement rates for X items, which perfectly exemplify the size-shading relationship that defined the Alpha category during training.
+
+Unexpected Effects of Learning Mode
+
+Contrary to our initial hypothesis that generative study would promote stronger coherence-based representations, the Classification condition actually showed stronger evidence of both generalization and typicality differentiation. Classification participants endorsed both X and Y items as category members at significantly higher rates than Generative Study participants, and they also gave higher typicality ratings to both item types. This pattern suggests that discriminative classification training may have led to broader generalization gradients or more inclusive category boundaries compared to generative study.
+
+One possible explanation for this unexpected pattern is that the discriminative classification task, which required distinguishing Alphas from Not Alphas, may have encouraged participants to focus on the positive diagonal correlation as the defining feature that separated the two categories. The Not Alpha items were distributed throughout feature space without systematic structure, making the diagonal correlation of the Alpha category particularly salient by contrast. This between-category comparison may have actually strengthened attention to the correlational structure more effectively than the within-category focus of the generative study task.
+
+In contrast, the generative study task required participants to recreate specific exemplars by adjusting feature values. While this task certainly required attention to the feature values of individual category members, it may not have encouraged participants to abstract the underlying correlation as strongly. Participants may have focused more on memorizing the specific feature combinations of the seven training items rather than extracting the general rule that size and shading increase together. This exemplar-focused encoding could explain why Generative Study participants showed more conservative generalization, endorsing novel items at lower rates overall.
+
+Alternative Interpretations: Similarity-Based Generalization
+
+An alternative interpretation of the results is that both conditions relied primarily on similarity-based rather than coherence-based generalization. The X items, which fall on the Alpha correlation line, are necessarily closer to the training exemplars than the Y items under most distance metrics. The observed preference for X over Y items could therefore reflect exemplar-based similarity judgments rather than abstraction of the underlying correlation.
+
+Several aspects of the data are consistent with this similarity-based interpretation. First, the generalization rates to X items were relatively modest rather than showing the strong categorical responding that would be expected if participants had formed rule-based representations of the correlation. Second, both conditions showed higher endorsement of Y items than would be expected under a strict coherence-based account, suggesting that proximity to training exemplars influenced judgments even for items that violated the learned correlation. Third, the typicality ratings showed graded patterns rather than sharp categorical distinctions, which is more consistent with similarity-based than rule-based representations.
+
+The between-condition differences in generalization rates could also be explained within a similarity-based framework. The Classification condition's broader generalization might reflect a more liberal response criterion or a larger generalization gradient around the training exemplars, rather than stronger extraction of correlational structure. The presence of Not Alpha items during training may have shifted participants' decision boundaries or altered their similarity computations in ways that led to more inclusive categorization.
+
+Implications for Coherence-Based Learning
+
+These results have important implications for understanding the conditions under which coherence-based category representations emerge. First, they suggest that simply having a perfectly correlated category structure is not sufficient to guarantee coherence-based learning. Even when the training items exhibit a clear diagonal correlation and the task provides ample opportunity to observe this regularity, learners may still rely primarily on exemplar-based similarity rather than abstracting the underlying rule.
+
+Second, the results challenge the assumption that generative or observational learning modes necessarily promote stronger within-category representations than discriminative classification. While generative tasks do require attention to specific feature values, they may not automatically lead to abstraction of higher-order regularities. The presence of a contrasting category in discriminative learning may actually facilitate extraction of correlational structure by making the defining features of each category more salient through comparison.
+
+Third, the modest differentiation between X and Y items in both conditions suggests that coherence-based learning may be particularly difficult to establish in single-category paradigms. Previous research showing robust coherence effects has typically used two-category designs where both categories exhibit correlational structure. The presence of two structured categories may create a more favorable context for extracting correlations, either because the between-category contrast highlights the importance of correlational information or because learners are more motivated to find efficient rules when faced with more complex category structures.
+
+Limitations and Future Directions
+
+Several limitations of the current study should be noted. First, the relatively small sample sizes in each condition (n = 32 and n = 26 after exclusions) may have limited statistical power to detect smaller effects. The marginal significance of the X versus Y difference in the Classification condition's test phase data (p = .075) suggests that a larger sample might reveal more robust differentiation.
+
+Second, the generative study task used in this experiment was relatively brief, with participants completing only one cycle through the seven training items. A more extended study phase with multiple repetitions might allow for stronger abstraction of the underlying correlation. Future research could examine whether the amount of exposure to category structure influences the development of coherence-based representations.
+
+Third, the current design does not allow us to definitively distinguish between coherence-based and similarity-based accounts of the observed patterns. Future studies could include additional transfer items that more clearly dissociate these accounts, such as items that fall on the correlation line but are very distant from training exemplars, or items that are close to training exemplars but violate the correlation.
+
+Finally, individual differences in learning strategies may have contributed to the variability observed in both conditions. Some participants may have spontaneously adopted rule-based strategies while others relied on exemplar memory. Future research could include measures of strategy use or cognitive style to better understand the factors that lead individual learners to adopt coherence-based versus similarity-based approaches.
+
+Conclusion
+
+Experiment 3 provides mixed evidence for coherence-based category learning in a single-category paradigm. While both learning conditions showed some differentiation between items that maintained versus violated the learned correlation, the overall patterns suggest that similarity-based processes played a substantial role in generalization. Contrary to expectations, discriminative classification training led to broader generalization than generative study, possibly because the presence of a contrasting category made the correlational structure more salient. These findings highlight the importance of task context and category structure in determining when learners will extract and utilize correlational information in category representations.
