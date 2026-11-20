@@ -80,7 +80,7 @@ df_cond2['accuracy'] = df_cond2['accuracy'].astype(float)
 last_block_per_subject = df_cond2.groupby('subject_id')['block'].max()
 
 # Determine the maximum possible blocks (should be 8 based on design)
-max_blocks = 8
+max_blocks = 7
 
 # For each subject who finished early, fill forward their final accuracy
 filled_rows = []
@@ -95,7 +95,7 @@ for subject_id, last_block in last_block_per_subject.items():
             filled_rows.append({
                 'subject_id': subject_id,
                 'block': missing_block,
-                'accuracy': final_accuracy  # Maintain their criterion performance
+                'accuracy': 1.0  # Maintain their criterion performance
             })
 
 # Append filled rows to the dataframe
