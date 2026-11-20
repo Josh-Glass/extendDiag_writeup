@@ -4,15 +4,49 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # ==========================================
-# 1. LOAD DATA & CALCULATE SAMPLE SIZES
+# 0. APPLY LEARNING CRITERION BASED ON TEST PERFORMANCE
 # ==========================================
-# Load the generated CSV files
+# Load test data for both conditions
+df_test_cond1 = pd.read_csv('single_cat_diag_data/condition_1_testPhase.csv')
+df_test_cond2 = pd.read_csv('single_cat_diag_data/condition_2_testPhase.csv')
+
+# Define trained items (labels 'a' for both conditions)
+# Calculate accuracy on trained items only
+def get_learners(df_test, threshold=0.80):
+    """
+    Returns list of subject IDs who achieved >= threshold accuracy on trained items
+    """
+    # Filter to only trained items (label 'a')
+    trained_items = df_test[df_test['label'] == 'a'].copy()
+    
+    # Calculate accuracy per subject
+    trained_items['correct'] = (trained_items['response'] == 'a').astype(float)
+    subject_accuracy = trained_items.groupby('subject_id')['correct'].mean()
+    
+    # Filter subjects meeting criterion
+    learners = subject_accuracy[subject_accuracy >= threshold].index.tolist()
+    
+    return learners, subject_accuracy
+
+# Get learners for each condition
+learners_cond1, acc_cond1 = get_learners(df_test_cond1, threshold=0.80)
+learners_cond2, acc_cond2 = get_learners(df_test_cond2, threshold=0.80)
+
+print(f"\nCondition 1: {len(learners_cond1)} subjects met 80% criterion on trained items")
+print(f"Condition 2: {len(learners_cond2)} subjects met 80% criterion on trained items")
+
+# ==========================================
+# 1. LOAD DATA & FILTER TO LEARNERS ONLY
+# ==========================================
 df_cond1 = pd.read_csv('single_cat_diag_data/condition_1_study.csv')
 df_cond2 = pd.read_csv('single_cat_diag_data/condition_2_trainPhase.csv')
 
-# Calculate unique subjects dynamically
-n_cond1 = df_cond1['subject_id'].nunique()
-n_cond2 = df_cond2['subject_id'].nunique()
+# Filter to learners only
+df_cond1 = df_cond1[df_cond1['subject_id'].isin(learners_cond1)]
+df_cond2 = df_cond2[df_cond2['subject_id'].isin(learners_cond2)]
+
+n_cond1 = len(learners_cond1)
+n_cond2 = len(learners_cond2)
 
 # ==========================================
 # 2. GENERATIVE STUDY ANALYSIS (CONDITION 1)
@@ -35,10 +69,14 @@ trial_agg = df_cond1.groupby(['subject_id', 'trial']).agg(
     num_attempts=('rt', 'count')
 ).reset_index()
 
+# Relabel trials to start from 1
+trial_agg['trial'] = trial_agg['trial'] + 1
+
 # Plot Generative Study Data
 sns.set_theme(style="whitegrid")
 fig1, axes = plt.subplots(1, 3, figsize=(18, 5.5))
-fig1.suptitle(f'Generative Study Training Performance (n={n_cond1})', fontsize=18, fontweight='bold', y=1.05)
+fig1.suptitle(f'Generative Study Training Performance (n={n_cond1}, ≥80% test accuracy)', 
+              fontsize=18, fontweight='bold', y=1.05)
 
 # Plot 1: Average Error
 sns.lineplot(data=trial_agg, x='trial', y='mean_error', marker='o', 
@@ -63,7 +101,8 @@ axes[2].set_ylabel('Average Attempts until Correct', fontsize=12)
 
 # Set integer x-ticks for all subplots
 for ax in axes:
-    ax.set_xticks(range(int(trial_agg['trial'].max() + 1)))
+    max_trial = int(trial_agg['trial'].max())
+    ax.set_xticks(range(1, max_trial + 1))
 
 plt.tight_layout()
 plt.savefig('single_cat_diag_data/generative_training_analysis.png', bbox_inches='tight', dpi=300)
@@ -108,20 +147,34 @@ else:
 # Aggregate accuracy by subject and block (now with filled data)
 learning_cond2 = df_cond2_complete.groupby(['subject_id', 'block'])['accuracy'].mean().reset_index()
 
+# Relabel blocks to start from 1
+learning_cond2['block'] = learning_cond2['block'] + 1
+
 # Plot Classification Training Data
 fig2 = plt.figure(figsize=(8, 6))
 
 sns.lineplot(data=learning_cond2, x='block', y='accuracy', marker='o', 
              color='#007bff', linewidth=2.5, markersize=8)
 
-plt.title(f'Classification Training: Accuracy over Blocks (n={n_cond2})', fontsize=16, fontweight='bold', pad=15)
+plt.title(f'Classification Training: Accuracy over Blocks (n={n_cond2}, ≥80% test accuracy)', 
+          fontsize=16, fontweight='bold', pad=15)
 plt.xlabel('Training Block', fontsize=14)
 plt.ylabel('Mean Accuracy', fontsize=14)
 plt.ylim(-0.05, 1.05)
-plt.xticks(range(int(learning_cond2['block'].max() + 1)))
+max_block = int(learning_cond2['block'].max())
+plt.xticks(range(1, max_block + 1))
 
 plt.tight_layout()
 plt.savefig('single_cat_diag_data/classification_training_analysis.png', bbox_inches='tight', dpi=300)
 print(f"Saved classification_training_analysis.png (n={n_cond2})")
 
-# Optional: plt.show() if you are running this interactively in Jupyter/Spyder
+# ==========================================
+# 4. SAVE FILTERED SUBJECT LISTS FOR DOWNSTREAM ANALYSES
+# ==========================================
+# Save learner IDs to file for use in test/typicality analyses
+pd.DataFrame({'subject_id': learners_cond1}).to_csv(
+    'single_cat_diag_data/condition_1_learners.csv', index=False)
+pd.DataFrame({'subject_id': learners_cond2}).to_csv(
+    'single_cat_diag_data/condition_2_learners.csv', index=False)
+
+print("\nSaved learner subject IDs for downstream analyses")
