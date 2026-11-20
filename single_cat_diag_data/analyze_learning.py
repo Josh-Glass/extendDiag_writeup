@@ -16,8 +16,8 @@ def get_learners(df_test, threshold=0.80):
     """
     Returns list of subject IDs who achieved >= threshold accuracy on trained items
     """
-    # Filter to only trained items (label 'a')
-    trained_items = df_test[df_test['label'] == 'a'].copy()
+    # Filter to only trained items (category 'a')
+    trained_items = df_test[df_test['category'] == 'a'].copy()
     
     # Calculate accuracy per subject
     trained_items['correct'] = (trained_items['response'] == 'a').astype(float)
