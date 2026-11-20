@@ -3,13 +3,31 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# 1. Load Test Phase Data
+# ==========================================
+# 0. LOAD LEARNER SUBJECT IDS
+# ==========================================
+learners_cond1 = pd.read_csv('single_cat_diag_data/condition_1_learners.csv')['subject_id'].tolist()
+learners_cond2 = pd.read_csv('single_cat_diag_data/condition_2_learners.csv')['subject_id'].tolist()
+
+print(f"Filtering to {len(learners_cond1)} learners in Condition 1")
+print(f"Filtering to {len(learners_cond2)} learners in Condition 2")
+
+# ==========================================
+# 1. LOAD TEST PHASE DATA & FILTER TO LEARNERS
+# ==========================================
 df_cond1 = pd.read_csv('single_cat_diag_data/condition_1_testPhase.csv')
 df_cond2 = pd.read_csv('single_cat_diag_data/condition_2_testPhase.csv')
+
+# Filter to learners only
+df_cond1 = df_cond1[df_cond1['subject_id'].isin(learners_cond1)]
+df_cond2 = df_cond2[df_cond2['subject_id'].isin(learners_cond2)]
 
 # Calculate Sample Sizes
 n_cond1 = df_cond1['subject_id'].nunique()
 n_cond2 = df_cond2['subject_id'].nunique()
+
+print(f"Condition 1: {n_cond1} subjects in test analysis")
+print(f"Condition 2: {n_cond2} subjects in test analysis")
 
 # 2. Define the Stimulus Coordinates
 dataX = np.array([
@@ -63,7 +81,8 @@ agg_cond2 = process_test_data(df_cond2, f'Classification Learning (n={n_cond2})'
 # ==========================================
 sns.set_theme(style="white")
 fig, axes = plt.subplots(1, 2, figsize=(15, 6), sharex=True, sharey=True)
-fig.suptitle('Test Phase Responses: Category Boundaries in Feature Space', fontsize=18, fontweight='bold', y=1.05)
+fig.suptitle('Test Phase Responses: Category Boundaries in Feature Space (≥80% Learners Only)', 
+             fontsize=18, fontweight='bold', y=1.05)
 
 for i, (cond_name, df_plot) in enumerate([(agg_cond1['condition'].iloc[0], agg_cond1), 
                                           (agg_cond2['condition'].iloc[0], agg_cond2)]):
@@ -96,4 +115,5 @@ cbar.set_label('Proportion Categorized as "Alpha"', fontsize=13, labelpad=15)
 
 plt.subplots_adjust(right=0.9)
 plt.savefig('single_cat_diag_data/test_phase_spatial_heatmap.png', bbox_inches='tight', dpi=300)
+print("\nSaved test_phase_spatial_heatmap.png")
 # plt.show()
