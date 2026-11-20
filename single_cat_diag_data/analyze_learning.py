@@ -75,8 +75,38 @@ print(f"Saved generative_training_analysis.png (n={n_cond1})")
 # Format accuracy as numeric (1.0 for True, 0.0 for False)
 df_cond2['accuracy'] = df_cond2['accuracy'].astype(float)
 
-# Aggregate accuracy by subject and block
-learning_cond2 = df_cond2.groupby(['subject_id', 'block'])['accuracy'].mean().reset_index()
+# ---- Fill forward for early finishers ----
+# Find the last block each subject completed
+last_block_per_subject = df_cond2.groupby('subject_id')['block'].max()
+
+# Determine the maximum possible blocks (should be 8 based on design)
+max_blocks = 8
+
+# For each subject who finished early, fill forward their final accuracy
+filled_rows = []
+for subject_id, last_block in last_block_per_subject.items():
+    if last_block < max_blocks:
+        # Get their final block's accuracy
+        final_accuracy = df_cond2[(df_cond2['subject_id'] == subject_id) & 
+                                   (df_cond2['block'] == last_block)]['accuracy'].mean()
+        
+        # Create rows for missing blocks, assuming they maintained criterion performance
+        for missing_block in range(int(last_block) + 1, max_blocks + 1):
+            filled_rows.append({
+                'subject_id': subject_id,
+                'block': missing_block,
+                'accuracy': final_accuracy  # Maintain their criterion performance
+            })
+
+# Append filled rows to the dataframe
+if filled_rows:
+    df_filled = pd.DataFrame(filled_rows)
+    df_cond2_complete = pd.concat([df_cond2, df_filled], ignore_index=True)
+else:
+    df_cond2_complete = df_cond2.copy()
+
+# Aggregate accuracy by subject and block (now with filled data)
+learning_cond2 = df_cond2_complete.groupby(['subject_id', 'block'])['accuracy'].mean().reset_index()
 
 # Plot Classification Training Data
 fig2 = plt.figure(figsize=(8, 6))
