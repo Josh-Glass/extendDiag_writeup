@@ -73,17 +73,23 @@ with open(output_file, 'w') as f:
     
     # X items: Generative Study vs Classification
     t_stat_x, p_val_x = stats.ttest_ind(x_cond1, x_cond2)
+    pooled_std_x = np.sqrt(((len(x_cond1)-1)*x_cond1.std()**2 + (len(x_cond2)-1)*x_cond2.std()**2) / (len(x_cond1)+len(x_cond2)-2))
+    cohens_d_x = (x_cond1.mean() - x_cond2.mean()) / pooled_std_x
     f.write(f"\nX Items (Generative Study vs Classification):\n")
     f.write(f"  Generative Study mean: {x_cond1.mean():.3f}\n")
     f.write(f"  Classification mean: {x_cond2.mean():.3f}\n")
     f.write(f"  Independent t-test: t({len(x_cond1)+len(x_cond2)-2}) = {t_stat_x:.3f}, p = {p_val_x:.4f}\n")
+    f.write(f"  Cohen's d = {cohens_d_x:.3f}\n")
     
     # Y items: Generative Study vs Classification
     t_stat_y, p_val_y = stats.ttest_ind(y_cond1, y_cond2)
+    pooled_std_y = np.sqrt(((len(y_cond1)-1)*y_cond1.std()**2 + (len(y_cond2)-1)*y_cond2.std()**2) / (len(y_cond1)+len(y_cond2)-2))
+    cohens_d_y = (y_cond1.mean() - y_cond2.mean()) / pooled_std_y
     f.write(f"\nY Items (Generative Study vs Classification):\n")
     f.write(f"  Generative Study mean: {y_cond1.mean():.3f}\n")
     f.write(f"  Classification mean: {y_cond2.mean():.3f}\n")
     f.write(f"  Independent t-test: t({len(y_cond1)+len(y_cond2)-2}) = {t_stat_y:.3f}, p = {p_val_y:.4f}\n")
+    f.write(f"  Cohen's d = {cohens_d_y:.3f}\n")
     
     # ==========================================
     # TYPICALITY PHASE ANALYSIS
@@ -136,17 +142,23 @@ with open(output_file, 'w') as f:
     
     # X items: Generative Study vs Classification
     t_stat_typ_x, p_val_typ_x = stats.ttest_ind(x_typ_c1, x_typ_c2)
+    pooled_std_typ_x = np.sqrt(((len(x_typ_c1)-1)*x_typ_c1.std()**2 + (len(x_typ_c2)-1)*x_typ_c2.std()**2) / (len(x_typ_c1)+len(x_typ_c2)-2))
+    cohens_d_typ_x = (x_typ_c1.mean() - x_typ_c2.mean()) / pooled_std_typ_x
     f.write(f"\nX Items (Generative Study vs Classification):\n")
     f.write(f"  Generative Study mean: {x_typ_c1.mean():.3f}\n")
     f.write(f"  Classification mean: {x_typ_c2.mean():.3f}\n")
     f.write(f"  Independent t-test: t({len(x_typ_c1)+len(x_typ_c2)-2}) = {t_stat_typ_x:.3f}, p = {p_val_typ_x:.4f}\n")
+    f.write(f"  Cohen's d = {cohens_d_typ_x:.3f}\n")
     
     # Y items: Generative Study vs Classification
     t_stat_typ_y, p_val_typ_y = stats.ttest_ind(y_typ_c1, y_typ_c2)
+    pooled_std_typ_y = np.sqrt(((len(y_typ_c1)-1)*y_typ_c1.std()**2 + (len(y_typ_c2)-1)*y_typ_c2.std()**2) / (len(y_typ_c1)+len(y_typ_c2)-2))
+    cohens_d_typ_y = (y_typ_c1.mean() - y_typ_c2.mean()) / pooled_std_typ_y
     f.write(f"\nY Items (Generative Study vs Classification):\n")
     f.write(f"  Generative Study mean: {y_typ_c1.mean():.3f}\n")
     f.write(f"  Classification mean: {y_typ_c2.mean():.3f}\n")
     f.write(f"  Independent t-test: t({len(y_typ_c1)+len(y_typ_c2)-2}) = {t_stat_typ_y:.3f}, p = {p_val_typ_y:.4f}\n")
+    f.write(f"  Cohen's d = {cohens_d_typ_y:.3f}\n")
     
     f.write("\n" + "="*70 + "\n")
     f.write("ANALYSIS COMPLETE\n")
