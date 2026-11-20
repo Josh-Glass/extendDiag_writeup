@@ -1,0 +1,8 @@
+TODO:
+
+1. finish analysis of experiment 3 (single cat diag)
+2. touch up analysis for experiment 2 (globloc)-- stats test for whether the difference in entenders is real between conditions
+and also make figures better (specifically redo heatmaps where the true lables are point annotations like how it's done in the exp 3 heatmaps)
+3. do DIVA and GCM a priori and post hoc simulations (should we do ALCOVE at all??) for experiments 1 and 2 like how exp 1 does them
+
+4. redo the writeup addressing all the comments.
