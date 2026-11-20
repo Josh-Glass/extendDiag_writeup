@@ -18,19 +18,44 @@ print(f"Filtering to {len(learners_cond2)} learners in Condition 2")
 df_cond1_typ = pd.read_csv('single_cat_diag_data/condition_1_typicality.csv')
 df_cond2_typ = pd.read_csv('single_cat_diag_data/condition_2_typicality.csv')
 
+print("\n=== DIAGNOSTIC: RAW DATA ===")
+print(f"Condition 1 raw rows: {len(df_cond1_typ)}")
+print(f"Condition 2 raw rows: {len(df_cond2_typ)}")
+print(f"Condition 1 raw subjects: {df_cond1_typ['subject_id'].nunique()}")
+print(f"Condition 2 raw subjects: {df_cond2_typ['subject_id'].nunique()}")
+
 # Filter to learners only
 df_cond1_typ = df_cond1_typ[df_cond1_typ['subject_id'].isin(learners_cond1)]
 df_cond2_typ = df_cond2_typ[df_cond2_typ['subject_id'].isin(learners_cond2)]
+
+print("\n=== DIAGNOSTIC: AFTER FILTERING TO LEARNERS ===")
+print(f"Condition 1 filtered rows: {len(df_cond1_typ)}")
+print(f"Condition 2 filtered rows: {len(df_cond2_typ)}")
+print(f"Condition 1 filtered subjects: {df_cond1_typ['subject_id'].nunique()}")
+print(f"Condition 2 filtered subjects: {df_cond2_typ['subject_id'].nunique()}")
+
+# Check what categories exist
+print("\n=== DIAGNOSTIC: CATEGORY LABELS ===")
+print(f"Condition 1 unique categories: {df_cond1_typ['category'].unique()}")
+print(f"Condition 2 unique categories: {df_cond2_typ['category'].unique()}")
+print(f"Condition 1 category counts:\n{df_cond1_typ['category'].value_counts()}")
+print(f"Condition 2 category counts:\n{df_cond2_typ['category'].value_counts()}")
 
 # Ensure responses are numeric
 df_cond1_typ['response'] = pd.to_numeric(df_cond1_typ['response'], errors='coerce')
 df_cond2_typ['response'] = pd.to_numeric(df_cond2_typ['response'], errors='coerce')
 
+print("\n=== DIAGNOSTIC: RESPONSE VALUES ===")
+print(f"Condition 1 NaN responses: {df_cond1_typ['response'].isna().sum()}")
+print(f"Condition 2 NaN responses: {df_cond2_typ['response'].isna().sum()}")
+print(f"Condition 1 response range: {df_cond1_typ['response'].min()} to {df_cond1_typ['response'].max()}")
+print(f"Condition 2 response range: {df_cond2_typ['response'].min()} to {df_cond2_typ['response'].max()}")
+
 # Calculate Sample Sizes
 n_cond1 = df_cond1_typ['subject_id'].nunique()
 n_cond2 = df_cond2_typ['subject_id'].nunique()
 
-print(f"Condition 1: {n_cond1} subjects in typicality analysis")
+print(f"\nCondition 1: {n_cond1} subjects in typicality analysis")
 print(f"Condition 2: {n_cond2} subjects in typicality analysis")
 
 # 2. Define the Stimulus Coordinates (Same as Test Phase)
@@ -68,9 +93,25 @@ def process_typicality_data(df, cond_name):
     df['x'] = df['stimId'].apply(lambda s: coord_map.get(s, [np.nan, np.nan])[0])
     df['y'] = df['stimId'].apply(lambda s: coord_map.get(s, [np.nan, np.nan])[1])
     
+    print(f"\n=== DIAGNOSTIC: {cond_name} COORDINATE MAPPING ===")
+    print(f"Rows with valid x coordinates: {df['x'].notna().sum()}")
+    print(f"Rows with valid y coordinates: {df['y'].notna().sum()}")
+    print(f"Unique stimIds: {df['stimId'].unique()}")
+    print(f"Sample of mapped coordinates:")
+    print(df[['stimId', 'x', 'y', 'category']].head(10))
+    
     # Aggregate mean typicality per coordinate
     agg = df.groupby(['stimId', 'x', 'y', 'category'])['response'].mean().reset_index()
     agg['condition'] = cond_name
+    
+    print(f"\n=== DIAGNOSTIC: {cond_name} AGGREGATED DATA ===")
+    print(f"Total aggregated rows: {len(agg)}")
+    print(f"X items: {len(agg[agg['category'] == 'x'])}")
+    print(f"Y items: {len(agg[agg['category'] == 'y'])}")
+    print(f"A items: {len(agg[agg['category'] == 'a'])}")
+    print(f"Sample of aggregated data:")
+    print(agg.head(10))
+    
     return agg
 
 agg_cond1_typ = process_typicality_data(df_cond1_typ, f'Generative Learning (n={n_cond1})')
