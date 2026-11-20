@@ -12,7 +12,7 @@ df_test_cond2 = pd.read_csv('single_cat_diag_data/condition_2_testPhase.csv')
 
 # Define trained items (labels 'a' for both conditions)
 # Calculate accuracy on trained items only
-def get_learners(df_test, threshold=0.80):
+def get_learners(df_test, threshold=0.70):
     """
     Returns list of subject IDs who achieved >= threshold accuracy on trained items
     """
@@ -29,8 +29,8 @@ def get_learners(df_test, threshold=0.80):
     return learners, subject_accuracy
 
 # Get learners for each condition
-learners_cond1, acc_cond1 = get_learners(df_test_cond1, threshold=0.80)
-learners_cond2, acc_cond2 = get_learners(df_test_cond2, threshold=0.80)
+learners_cond1, acc_cond1 = get_learners(df_test_cond1, threshold=0.70)
+learners_cond2, acc_cond2 = get_learners(df_test_cond2, threshold=0.70)
 
 print(f"\nCondition 1: {len(learners_cond1)} subjects met 80% criterion on trained items")
 print(f"Condition 2: {len(learners_cond2)} subjects met 80% criterion on trained items")

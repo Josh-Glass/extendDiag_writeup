@@ -1,0 +1,76 @@
+======================================================================
+EXPERIMENT 3: STATISTICAL TESTS - X vs Y Items
+Analysis Date: 2026-11-20 16:14:03
+======================================================================
+
+Sample Sizes (≥70% accuracy on trained items at test):
+  Generative Study Condition: n = 32
+  Classification Condition: n = 26
+
+======================================================================
+TEST PHASE: GENERALIZATION TO X vs Y ITEMS
+======================================================================
+
+--- WITHIN-CONDITION COMPARISONS (Paired t-tests) ---
+
+Generative Study Condition:
+  Mean X items: 0.464 (SD = 0.260)
+  Mean Y items: 0.375 (SD = 0.274)
+  Paired t-test: t(31) = 1.641, p = 0.1109
+  Cohen's d = 0.340
+
+Classification Condition:
+  Mean X items: 0.699 (SD = 0.333)
+  Mean Y items: 0.609 (SD = 0.377)
+  Paired t-test: t(25) = 1.860, p = 0.0747
+  Cohen's d = 0.269
+
+--- BETWEEN-CONDITION COMPARISONS (Independent t-tests) ---
+
+X Items (Generative Study vs Classification):
+  Generative Study mean: 0.464
+  Classification mean: 0.699
+  Independent t-test: t(56) = -3.019, p = 0.0038
+  Cohen's d = -0.797
+
+Y Items (Generative Study vs Classification):
+  Generative Study mean: 0.375
+  Classification mean: 0.609
+  Independent t-test: t(56) = -2.733, p = 0.0084
+  Cohen's d = -0.722
+
+======================================================================
+TYPICALITY PHASE: RATINGS OF X vs Y ITEMS
+======================================================================
+
+--- WITHIN-CONDITION COMPARISONS (Paired t-tests) ---
+
+Generative Study Condition:
+  Mean X items: 2.984 (SD = 1.010)
+  Mean Y items: 2.615 (SD = 1.248)
+  Paired t-test: t(31) = 2.251, p = 0.0316
+  Cohen's d = 0.366
+
+Classification Condition:
+  Mean X items: 4.128 (SD = 1.414)
+  Mean Y items: 3.513 (SD = 1.502)
+  Paired t-test: t(25) = 4.030, p = 0.0005
+  Cohen's d = 0.435
+
+--- BETWEEN-CONDITION COMPARISONS (Independent t-tests) ---
+
+X Items (Generative Study vs Classification):
+  Generative Study mean: 2.984
+  Classification mean: 4.128
+  Independent t-test: t(56) = -3.588, p = 0.0007
+  Cohen's d = -0.947
+
+Y Items (Generative Study vs Classification):
+  Generative Study mean: 2.615
+  Classification mean: 3.513
+  Independent t-test: t(56) = -2.488, p = 0.0158
+  Cohen's d = -0.657
+
+======================================================================
+ANALYSIS COMPLETE
+======================================================================
