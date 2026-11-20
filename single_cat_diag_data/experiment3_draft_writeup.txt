@@ -1,0 +1,60 @@
+EXPERIMENT 3: SINGLE CATEGORY DIAGONAL STRUCTURE
+
+INTRODUCTION
+
+Experiments 1 and 2 demonstrated that coherence-based categorization emerges robustly when both categories in a domain exhibit strong correlational structure, but becomes less prevalent when only one category is structured. These findings raise important questions about the boundary conditions for coherence-based learning and the factors that promote or inhibit its adoption. Experiment 3 investigates two such factors: the strength of feature correlations within a category and the mode of learning through which category knowledge is acquired.
+
+The first question concerns whether correlation strength causally influences the degree to which learners adopt coherence-based representations. While Experiments 1 and 2 used categories with perfect feature correlations, natural categories often exhibit weaker or probabilistic correlational structure. If coherence-based learning is fundamentally driven by the detection and extraction of feature regularities, then we should observe a graded relationship between correlation strength and the tendency to generalize based on those correlations. Stronger correlations should produce more robust coherence-based generalization, while weaker correlations should reduce reliance on this strategy.
+
+The second question addresses how learning mode influences representational strategy. Previous research has distinguished between discriminative learning, where the goal is to distinguish between contrasting categories, and more generative or observational learning modes, where learners focus on understanding the internal structure of individual categories. Generative learning tasks, such as feature inference or observational study, may encourage learners to build richer within-category representations that capture correlational structure. In contrast, discriminative classification may focus attention on between-category boundaries rather than within-category regularities. If coherence-based representations depend on extracting within-category structure, then generative learning modes should promote their development more effectively than standard discriminative classification.
+
+Experiment 3 tests these hypotheses using a simplified single-category paradigm. Rather than learning to distinguish between two contrasting categories, subjects learn about a single category (Alpha) that exhibits a perfect positive correlation between size and shading dimensions. We manipulate learning mode across two conditions. In the Generative Study condition, subjects learn about the Alpha category through an observational study phase where they attempt to recreate category members by adjusting size and shading values to match presented exemplars. This generative task requires attention to the specific feature values that define category membership and should encourage extraction of the underlying correlation. In the Classification condition, subjects learn through standard supervised classification, deciding whether items are Alphas or Not Alphas with corrective feedback. This discriminative task emphasizes the category boundary rather than internal structure.
+
+Following training, both conditions complete identical test and typicality rating phases. The test phase includes the seven training items plus twelve novel transfer items arranged along two diagonal lines in feature space. Six items fall along the Alpha category's correlation line (X items), maintaining the learned size-shading relationship. Six items fall along a parallel diagonal (Y items), exhibiting the same correlation strength but displaced in feature space. Under a coherence-based account, subjects should classify X items as Alphas because they conform to the learned correlation, while rejecting Y items despite their similar correlational structure. Under an exemplar-based account, classification should depend primarily on proximity to training items, with both X and Y items treated similarly based on their distances from familiar exemplars.
+
+The typicality rating phase provides an additional window into category representation by asking subjects to judge how well items represent the Alpha category. If subjects have formed coherence-based representations, they may show category idealization effects where extreme-valued items that strongly exemplify the learned correlation are rated as more typical than actual training items. Such idealization would indicate that subjects have abstracted beyond specific exemplars to form representations based on the underlying regularity.
+
+By examining both generalization patterns and typicality judgments across different learning modes, Experiment 3 aims to clarify the conditions under which coherence-based representations emerge and the extent to which they can be promoted through task design. The results will inform our understanding of the flexibility and constraints of human category learning, particularly regarding the interplay between learning context and representational strategy.
+
+
+METHODS
+
+Participants
+
+[TO BE COMPLETED - Include sample size, recruitment source, compensation, exclusion criteria]
+
+Design
+
+Experiment 3 employed a between-subjects design with two conditions that differed in learning mode. The Generative Study condition (Condition 1) used an observational learning paradigm where subjects studied Alpha category members by attempting to recreate them through feature manipulation. The Classification condition (Condition 2) used standard supervised classification where subjects learned to distinguish Alpha items from Not Alpha items with corrective feedback. Both conditions used identical stimulus materials and completed the same test and typicality phases following training.
+
+The Alpha category consisted of seven items that exhibited a perfect positive correlation between size and shading dimensions. These items formed a diagonal line in two-dimensional feature space, with size and shading values increasing together. The training items were positioned at regular intervals along this diagonal, spanning a substantial portion of the feature space to establish a clear correlational pattern.
+
+The test phase introduced twelve novel transfer items in addition to the seven training items. Six transfer items (X items) fell along the Alpha category's correlation line, extending the diagonal beyond the range of training exemplars. These items maintained the learned size-shading relationship and represented a direct test of whether subjects would generalize the correlation to new regions of feature space. Six additional transfer items (Y items) fell along a parallel diagonal, exhibiting the same positive correlation between size and shading but displaced from the Alpha category's line. These items tested whether subjects would generalize based on correlation strength alone or whether they had learned the specific correlation line that defined the Alpha category.
+
+Materials
+
+Stimuli were monochromatic squares that varied continuously along two dimensions: size and grayscale shading. Size values ranged from small to large, while shading values ranged from black (0.0) to white (1.0). These dimensions were chosen for their perceptual separability, which justifies the use of a city-block distance metric in computational modeling. An independent scaling study confirmed that the dimensions were approximately equal in perceptual salience.
+
+The seven Alpha training items were positioned at coordinates that created a perfect diagonal correlation in feature space. Specific coordinates were selected to span a meaningful range of both dimensions while maintaining equal spacing along the diagonal. All stimuli were generated programmatically to ensure precise control over dimensional values.
+
+Procedure
+
+Subjects in the Generative Study condition began with instructions explaining that they would learn about a category of geometric shapes called Alphas by attempting to create them. On each trial, a target Alpha item appeared on screen along with two sliders controlling size and shading. Subjects adjusted the sliders to match the target item as closely as possible. After submitting their attempt, they received feedback showing the target item and their created item side by side, along with a numerical error score indicating the Euclidean distance between their attempt and the target. Subjects could make multiple attempts on each trial until they successfully matched the target within a small tolerance threshold. The seven Alpha items were presented in random order, and subjects completed one full cycle through all seven items during the study phase.
+
+Subjects in the Classification condition received instructions explaining that they would learn to identify Alpha category members through classification with feedback. On each trial, a stimulus appeared on screen with two response buttons labeled "Yes, Alpha" and "No, Not Alpha." After responding, subjects received corrective feedback indicating the true category membership. Training included the seven Alpha items plus seven Not Alpha items that were distributed throughout feature space without following a systematic correlation pattern. Training continued for up to eight blocks, with each block presenting all fourteen items in random order. Subjects could advance to the test phase early if they achieved perfect accuracy (14/14 correct) on any block after completing a minimum number of blocks.
+
+Following the training phase, both conditions completed an identical test phase. Instructions explained that subjects would classify items as Alphas or Not Alphas without feedback, and that some items would be familiar from training while others would be completely new. The test phase presented all seven training items plus the twelve transfer items (six X items and six Y items) in a single block with randomized order. Subjects made binary classification decisions using the same response buttons as in training.
+
+After completing the test phase, subjects proceeded to a typicality rating phase. Instructions explained that they would judge how well each item represented the Alpha category, emphasizing that they should not judge familiarity or confidence but rather how typical or representative each item was of the category. The same nineteen items from the test phase were presented in random order. For each item, subjects used a seven-point rating scale to indicate typicality, with 1 representing "not at all typical" and 7 representing "extremely typical."
+
+Upon completing all phases, subjects were thanked and debriefed about the purpose of the study.
+
+
+RESULTS
+
+[TO BE COMPLETED]
+
+
+DISCUSSION
+
+[TO BE COMPLETED]
