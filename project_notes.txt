@@ -3,6 +3,29 @@ TODO:
 1. finish analysis of experiment 3 (single cat diag)
 2. touch up analysis for experiment 2 (globloc)-- stats test for whether the difference in entenders is real between conditions
 and also make figures better (specifically redo heatmaps where the true lables are point annotations like how it's done in the exp 3 heatmaps)
-3. do DIVA and GCM a priori and post hoc simulations (should we do ALCOVE at all??) for experiments 1 and 2 like how exp 1 does them
+3. do DIVA and GCM a priori and post hoc simulations (should we do ALCOVE at all??) 
+for experiments 1 and 2 like how exp 1 does them-- this should be done at the time of analysis for each experiment, so really do step 1 then step 3 for step one,
+then step 2 and then step 3 for step 2-- make sense?
+
+for analysis code:
+save all stats outputs automatically as text file
+save figures in publication ready format (no title, save as pdf and png), save a caprtion explaining how to read the figure as 
+an appropriately labeled text file
 
 4. redo the writeup addressing all the comments.
+
+
+Note on the writeup:
+
+experiment 3 use to be something else, but that experiment was a flop, so it was replaced with
+the single cat diag experiment, which was intended to test learning mode's effect on sensitivity to
+generalizing based on feature correlation. this was done because experiment 2 tried to do this, but it was only 
+an instructional manipulation, so exp 3 was more heavy handed, also the structures used in exp 3 were more similar to that
+of exp 1 than in exp 2 so it is a closer replication.
+also we need to work on the framing of the whole paper to make it more interesting and valuable:
+-exp1 finds this cool thing
+-exp2 tries to see if it is still present whne pushed to teh limits (less favorable conditions- interp rather tahn extend, closer to the opposing cat instead of equidist, and only one cat exhibit correlation)
+-exp3 tries to narrow in on the question of learning mode that was broached in exp2 but was not treated thoroughly yet
+
+
+right now, overall the writeup is hinging it's success on the presence of the correlation extension being seen everywhere, instead of just telling the cool scientific story
