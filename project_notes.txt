@@ -26,6 +26,12 @@ trial,block,stimId,category,response,accuracy,rt,subject_id,condition
 9,0,NotA2,NotA,NotA,True,1567,2173,2
 
 
+UPDATE this is now done. now we need update the Exp 3 writeup text file based on the updated results (included learning peroformance and performance on trained items at test descriptives)
+based on the updated results (all found in the writeup_textfiles folder). aslo report teh 5/7 criterion at test an rationale
+also need to adjust the intro so that it better frames this experiment
+may need to update the discussion.
+
+
 2. touch up analysis for experiment 2 (globloc)-- stats test for whether the difference in entenders is real between conditions
 and also make figures better (specifically redo heatmaps where the true lables are point annotations like how it's done in the exp 3 heatmaps)
 3. do DIVA and GCM a priori and post hoc simulations (should we do ALCOVE at all??) 
@@ -38,6 +44,162 @@ save figures in publication ready format (no title, save as pdf and png), save a
 an appropriately labeled text file
 
 4. redo the writeup addressing all the comments.
+
+
+=== COMPUTATIONAL MODELING PLAN ===
+
+OVERVIEW:
+Need flexible, reusable workflow for DIVA and GCM modeling on Experiments 2 and 3.
+Two phases: (1) A priori simulations showing model behavior across parameter space,
+(2) Post-hoc fitting to quantify match to human data.
+
+MODELS TO INCLUDE:
+- DIVA (diva.py) - coherence-based, learns feature correlations
+- GCM (gcm.py) - similarity-based, exemplar model
+- NOT ALCOVE - we're focused on generalization, not learning dynamics
+
+KEY REQUIREMENTS:
+1. Flexible - same code structure works for both experiments
+2. Fast - parameter optimization needs to be efficient
+3. Well-organized - clear separation of concerns, reusable components
+4. Reproducible - seeded, deterministic where possible
+
+WORKFLOW STRUCTURE:
+
+Phase 1: A PRIORI SIMULATIONS
+Goal: Show what each model predicts across parameter space (like Exp 1 did)
+- Sample parameter space systematically (grid or random sampling)
+- For each parameter set, train model and get test predictions
+- Focus on CRITICAL items (X vs Y in Exp 3; T3/T4 in Exp 2)
+- Output: distributions of predictions showing model's behavioral repertoire
+- Visualization: density plots or heatmaps showing parameter space coverage
+
+Phase 2: POST-HOC FITTING
+Goal: Find best-fitting parameters and quantify model performance
+- Optimization target: minimize MSE between model and human response probabilities
+- Search method: grid search for DIVA (stochastic), scipy.optimize for GCM (deterministic)
+- Fit to: aggregate human data (proportion choosing each category)
+- Output: best parameters, MSE, predicted vs observed plots
+- Report: which model fits better, qualitative match to patterns
+
+PROPOSED FILE STRUCTURE:
+
+model_code/
+  diva.py                    [already exists]
+  gcm.py                     [already exists]
+  
+  modeling_utils.py          [NEW - shared utilities]
+    - load_experiment_data() - loads human data for an experiment
+    - prepare_stimuli()      - converts experiment stimuli to model format
+    - calculate_mse()        - MSE between model and human probabilities
+    - save_results()         - standardized output format
+  
+  run_apriori.py            [NEW - a priori simulations]
+    - sample_parameter_space() - generate parameter sets to test
+    - run_model_sweep()        - train+test model across parameters
+    - visualize_predictions()  - density plots of model behavior
+    - main() - run for specified experiment and model
+  
+  run_fitting.py            [NEW - post-hoc fitting]
+    - objective_function()  - MSE wrapper for optimizer
+    - fit_diva()           - grid search (handles stochasticity)
+    - fit_gcm()            - scipy.optimize (deterministic)
+    - compare_models()     - side-by-side comparison plots
+    - main() - run for specified experiment
+  
+single_cat_diag_data/
+  modeling/                 [NEW - experiment-specific outputs]
+    apriori_diva.png/pdf
+    apriori_gcm.png/pdf
+    fitting_results.txt
+    fitted_predictions.png/pdf
+    
+globloc_data/
+  modeling/                 [NEW - experiment-specific outputs]
+    [same structure]
+
+EXPERIMENT-SPECIFIC CONFIGURATIONS:
+
+Experiment 3 (single_cat_diag):
+- Training: 7 Alpha items (diagonal correlation), 7 NotAlpha items (scattered)
+- Critical test items: X items (on Alpha diagonal), Y items (parallel diagonal)
+- Key comparison: P(Alpha | X) vs P(Alpha | Y)
+- Human data source: single_cat_diag_data/writeup_textfiles/statistical_results.txt
+
+Experiment 2 (globloc):
+- Training: 6 Alpha items (diagonal), 6 Beta items (scattered)
+- Critical test items: T3, T4 (on Alpha diagonal but near Beta exemplars)
+- Key comparison: P(Alpha | T3), P(Alpha | T4)
+- Human data source: globloc_data/[need to identify file]
+
+PARAMETER SPACES TO EXPLORE:
+
+DIVA (from diva.py DEFAULTS):
+- n_hid: [2, 3, 4, 5, 6, 8] (capacity)
+- lr: [0.05, 0.1, 0.15, 0.2, 0.25, 0.3] (learning rate)
+- wr: [0.5, 1.0, 1.5, 2.0] (weight init range)
+- beta: [0, 1, 2, 3, 5] (focusing parameter)
+- Fixed: readout='luce', activation='sigmoid', coding='pm1', 
+         init='uniform', out_act='linear' (canonical profile)
+
+GCM (from gcm.py):
+- c: [0.5, 1, 2, 4, 6, 8, 10] (specificity)
+- r: [1, 2] (distance metric: 1=cityblock, 2=euclidean)
+- phi: [0.5, 1, 2, 4, 6, 8, 10] (response mapping)
+- attention_weights: uniform (1/n_features each) vs optimized
+
+A PRIORI SAMPLING STRATEGY:
+- DIVA: Random sampling (e.g., 500-1000 parameter sets) due to stochasticity
+  - For each set, run N=10-20 replications, average predictions
+- GCM: Full grid (deterministic, so exhaustive is feasible)
+  - ~200-400 parameter combinations total
+
+POST-HOC FITTING STRATEGY:
+- DIVA: Coarse grid search (fewer points than a priori)
+  - For each grid point, run N=50-100 replications, average
+  - Select best by MSE
+- GCM: scipy.optimize.minimize (Nelder-Mead or Powell)
+  - Multiple random starts to avoid local minima
+  - Fast because deterministic
+
+SPEED OPTIMIZATIONS:
+- Vectorize where possible (batch stimuli through models)
+- Use numpy throughout (already done in model code)
+- For DIVA fitting: parallel processing across parameter sets (multiprocessing)
+- Cache training results if test-only predictions needed repeatedly
+- For a priori: can reduce N replications since we want distributions not point estimates
+
+OUTPUT FORMATS:
+
+A priori results:
+- CSV: parameter_set, model, experiment, item_id, p_category_A, p_category_B
+- Plots: 2D density (X vs Y endorsement for Exp3; T3 vs T4 for Exp2)
+- Text summary: parameter ranges, key qualitative patterns
+
+Fitting results:
+- Text file: best parameters, MSE, correlation, qualitative assessment
+- CSV: item_id, human_prob, model_prob, error
+- Plots: predicted vs observed scatter, bar charts by item type
+
+VALIDATION:
+- Cross-check DIVA against verify() function (Type V probe)
+- Cross-check GCM against known SHJ results if available
+- Ensure model predictions are sensible (probabilities sum to 1, etc.)
+
+TIMELINE:
+1. Build modeling_utils.py (shared infrastructure)
+2. Build run_apriori.py and test on Exp 3
+3. Build run_fitting.py and test on Exp 3
+4. Apply to Exp 2 (should be mostly plug-and-play)
+5. Generate all figures and results files
+6. Update writeup with modeling results
+
+QUESTIONS TO RESOLVE:
+- Exact human data format for each experiment (need to verify file locations)
+- Whether to fit to aggregate data or individual subjects (aggregate is standard)
+- Whether attention weights in GCM should be free parameters (probably yes for fitting)
+- How many DIVA replications needed for stable fitting (balance speed vs accuracy)
+- Whether to include typicality ratings in fitting or just classification
 
 
 Note on the writeup:
