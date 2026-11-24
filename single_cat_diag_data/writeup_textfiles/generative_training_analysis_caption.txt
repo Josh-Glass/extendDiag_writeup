@@ -1,0 +1,6 @@
+Figure: Generative Study Training Performance
+Shows learning curves across 7 training trials for subjects who met the learning criterion.
+Left panel: Mean Euclidean error distance between target and created stimuli.
+Middle panel: Mean reaction time per trial.
+Right panel: Mean number of attempts required to match target within tolerance threshold.
+Error bars represent standard error of the mean.

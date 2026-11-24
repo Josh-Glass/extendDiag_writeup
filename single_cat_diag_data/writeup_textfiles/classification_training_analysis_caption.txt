@@ -1,0 +1,6 @@
+Figure: Classification Training Performance
+Shows learning curves across 8 training blocks for subjects who met the learning criterion.
+Mean accuracy on Alpha vs Not Alpha classification with corrective feedback.
+For subjects who finished early by achieving perfect accuracy, remaining blocks are imputed
+as maintaining criterion-level performance (accuracy = 1.0).
+Error bars represent standard error of the mean.

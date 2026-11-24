@@ -1,10 +1,35 @@
 TODO:
 
 1. finish analysis of experiment 3 (single cat diag)
+--NOTE major priority, we need to double check that the learning criterion and learnign curve code is working correctly
+we are losing a lot of subjects and performance is very poor, we need to double check that the code is working as intended.
+we should also report average and SD measures for learning and test performance (on trained items), save to text file for later use in writeup
+we need a good justification for the cutoff criterion whatever we decide on. in exp 1 the criterion was 6/8 by the last block of training. 
+we should probably have fairly consistent criteria across exps right? here is a sample of the trainng data structure to check against the code:
+trial,block,stimId,category,response,accuracy,rt,subject_id,condition
+0,0,A4,a,NotA,False,3056,2173,2
+1,0,A5,a,a,True,1741,2173,2
+2,0,A1,a,a,True,2577,2173,2
+3,0,A3,a,a,True,1260,2173,2
+
+and here is a sample of test phase data:
+trial,block,stimId,category,response,accuracy,rt,subject_id,condition
+0,0,NotA5,NotA,NotA,True,2024,2173,2
+1,0,NotA1,NotA,NotA,True,2552,2173,2
+2,0,A3,a,a,True,2119,2173,2
+3,0,X2,x,a,False,1749,2173,2
+4,0,Y5,y,a,False,1091,2173,2
+5,0,A4,a,a,True,1621,2173,2
+6,0,A2,a,a,True,973,2173,2
+7,0,X3,x,a,False,956,2173,2
+8,0,X1,x,a,False,930,2173,2
+9,0,NotA2,NotA,NotA,True,1567,2173,2
+
+
 2. touch up analysis for experiment 2 (globloc)-- stats test for whether the difference in entenders is real between conditions
 and also make figures better (specifically redo heatmaps where the true lables are point annotations like how it's done in the exp 3 heatmaps)
 3. do DIVA and GCM a priori and post hoc simulations (should we do ALCOVE at all??) 
-for experiments 1 and 2 like how exp 1 does them-- this should be done at the time of analysis for each experiment, so really do step 1 then step 3 for step one,
+for experiments 2 and 3 like how exp 1 does them-- this should be done at the time of analysis for each experiment, so really do step 1 then step 3 for step one,
 then step 2 and then step 3 for step 2-- make sense?
 
 for analysis code:

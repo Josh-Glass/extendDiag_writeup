@@ -1,9 +1,9 @@
 ======================================================================
-EXPERIMENT 3: STATISTICAL TESTS - X vs Y Items
-Analysis Date: 2026-11-20 16:14:03
+STATISTICAL TESTS: X vs Y Items
+Analysis Date: 2026-11-24 16:08:58
 ======================================================================
 
-Sample Sizes (≥70% accuracy on trained items at test):
+Sample Sizes (≥70% [5/7 or two errors allowed just like in exp 1] accuracy on trained items at test):
   Generative Study Condition: n = 32
   Classification Condition: n = 26
 

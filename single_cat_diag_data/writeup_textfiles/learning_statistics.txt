@@ -1,0 +1,48 @@
+================================================================================
+EXPERIMENT 3: LEARNING PHASE STATISTICS
+================================================================================
+
+Learning Criterion: 71.4% (5/7 correct on trained items at test)
+
+--------------------------------------------------------------------------------
+CONDITION 1: GENERATIVE STUDY
+--------------------------------------------------------------------------------
+Total subjects recruited: 44
+Subjects meeting criterion: 32 (72.7%)
+Subjects excluded: 12
+
+Test Phase Performance on Trained Items:
+  All subjects - Mean: 0.750, SD: 0.225
+  All subjects - Range: 0.286 to 1.000
+  Learners only - Mean: 0.871, SD: 0.111
+  Learners only - Range: 0.714 to 1.000
+
+Training Phase Performance (Generative Study):
+  Mean error distance - First trial: 0.109
+  Mean error distance - Last trial: 0.065
+  Mean RT - First trial: 16841.0 ms
+  Mean RT - Last trial: 8244.4 ms
+  Mean attempts - First trial: 4.44
+  Mean attempts - Last trial: 4.97
+
+--------------------------------------------------------------------------------
+CONDITION 2: CLASSIFICATION
+--------------------------------------------------------------------------------
+Total subjects recruited: 50
+Subjects meeting criterion: 26 (52.0%)
+Subjects excluded: 24
+
+Test Phase Performance on Trained Items:
+  All subjects - Mean: 0.694, SD: 0.189
+  All subjects - Range: 0.429 to 1.000
+  Learners only - Mean: 0.852, SD: 0.111
+  Learners only - Range: 0.714 to 1.000
+
+Training Phase Performance (Classification):
+  Mean accuracy - Block 1: 0.536
+  Mean accuracy - Block 8: 0.764
+  Subjects who finished early: 9/26
+
+================================================================================
+END OF REPORT
+================================================================================

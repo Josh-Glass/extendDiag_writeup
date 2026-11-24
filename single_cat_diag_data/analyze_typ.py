@@ -2,6 +2,10 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
+
+# Create output directories
+os.makedirs('single_cat_diag_data/figures', exist_ok=True)
 
 # ==========================================
 # 0. LOAD LEARNER SUBJECT IDS
@@ -122,8 +126,6 @@ agg_cond2_typ = process_typicality_data(df_cond2_typ, f'Classification Learning 
 # ==========================================
 sns.set_theme(style="white")
 fig, axes = plt.subplots(1, 2, figsize=(15, 6), sharex=True, sharey=True)
-fig.suptitle('Typicality Ratings in Feature Space (≥80% Learners Only)', 
-             fontsize=18, fontweight='bold', y=1.05)
 
 # Fix color scale from 0 to 6 (slider bounds)
 vmin, vmax = 0, 6
@@ -156,6 +158,7 @@ cbar = fig.colorbar(scatter, cax=cbar_ax)
 cbar.set_label('Typicality Rating (0 = Low, 6 = High)', fontsize=13, labelpad=15)
 
 plt.subplots_adjust(right=0.9)
-plt.savefig('single_cat_diag_data/typicality_spatial_heatmap.png', bbox_inches='tight', dpi=300)
-print("\nSaved typicality_spatial_heatmap.png")
+plt.savefig('single_cat_diag_data/figures/typicality_spatial_heatmap.png', bbox_inches='tight', dpi=300)
+plt.savefig('single_cat_diag_data/figures/typicality_spatial_heatmap.pdf', bbox_inches='tight')
+print("\nSaved typicality_spatial_heatmap.png and .pdf")
 # plt.show()

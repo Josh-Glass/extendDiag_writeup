@@ -2,6 +2,10 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
+
+# Create output directories
+os.makedirs('single_cat_diag_data/figures', exist_ok=True)
 
 # ==========================================
 # 0. LOAD LEARNER SUBJECT IDS
@@ -81,8 +85,6 @@ agg_cond2 = process_test_data(df_cond2, f'Classification Learning (n={n_cond2})'
 # ==========================================
 sns.set_theme(style="white")
 fig, axes = plt.subplots(1, 2, figsize=(15, 6), sharex=True, sharey=True)
-fig.suptitle('Test Phase Responses: Category Boundaries in Feature Space (≥80% Learners Only)', 
-             fontsize=18, fontweight='bold', y=1.05)
 
 for i, (cond_name, df_plot) in enumerate([(agg_cond1['condition'].iloc[0], agg_cond1), 
                                           (agg_cond2['condition'].iloc[0], agg_cond2)]):
@@ -114,6 +116,7 @@ cbar = fig.colorbar(scatter, cax=cbar_ax)
 cbar.set_label('Proportion Categorized as "Alpha"', fontsize=13, labelpad=15)
 
 plt.subplots_adjust(right=0.9)
-plt.savefig('single_cat_diag_data/test_phase_spatial_heatmap.png', bbox_inches='tight', dpi=300)
-print("\nSaved test_phase_spatial_heatmap.png")
+plt.savefig('single_cat_diag_data/figures/test_phase_spatial_heatmap.png', bbox_inches='tight', dpi=300)
+plt.savefig('single_cat_diag_data/figures/test_phase_spatial_heatmap.pdf', bbox_inches='tight')
+print("\nSaved test_phase_spatial_heatmap.png and .pdf")
 # plt.show()
