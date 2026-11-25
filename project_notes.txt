@@ -78,6 +78,7 @@ Phase 2: POST-HOC FITTING
 Goal: Find best-fitting parameters and quantify model performance
 - Optimization target: minimize MSE between model and human response probabilities
 - Search method: grid search for DIVA (stochastic), scipy.optimize for GCM (deterministic)
+- - maybe we should use a smarter hparam optimizing method like and evolutionary algo or something???
 - Fit to: aggregate human data (proportion choosing each category)
 - Output: best parameters, MSE, predicted vs observed plots
 - Report: which model fits better, qualitative match to patterns
@@ -144,9 +145,9 @@ DIVA (from diva.py DEFAULTS):
 
 GCM (from gcm.py):
 - c: [0.5, 1, 2, 4, 6, 8, 10] (specificity)
-- r: [1, 2] (distance metric: 1=cityblock, 2=euclidean)
-- phi: [0.5, 1, 2, 4, 6, 8, 10] (response mapping)
-- attention_weights: uniform (1/n_features each) vs optimized
+- r: [1, 2] (distance metric: 1=cityblock, 2=euclidean) (actually don't think we need to vary this becuase stim have separable features which should be city block distance)
+- phi: [0.5, 1, 2, 4, 6, 8, 10] (response mapping, I think it is actually usually called gamma when talking about GCM [it's called phi in ALCOVE i think])
+- attention_weights: uniform (1/n_features each) vs optimized (definitely need a thorough exploration of attention weights)
 
 A PRIORI SAMPLING STRATEGY:
 - DIVA: Random sampling (e.g., 500-1000 parameter sets) due to stochasticity
@@ -158,9 +159,11 @@ POST-HOC FITTING STRATEGY:
 - DIVA: Coarse grid search (fewer points than a priori)
   - For each grid point, run N=50-100 replications, average
   - Select best by MSE
+  - or maybe some kind of evolutionary algo or a bayesian search or something?
 - GCM: scipy.optimize.minimize (Nelder-Mead or Powell)
   - Multiple random starts to avoid local minima
   - Fast because deterministic
+  - - or maybe some kind of evolutionary algo or a bayesian search or something?
 
 SPEED OPTIMIZATIONS:
 - Vectorize where possible (batch stimuli through models)
@@ -173,7 +176,7 @@ OUTPUT FORMATS:
 
 A priori results:
 - CSV: parameter_set, model, experiment, item_id, p_category_A, p_category_B
-- Plots: 2D density (X vs Y endorsement for Exp3; T3 vs T4 for Exp2)
+- Plots: 2D density (X - Y resp prob difference score for Exp3; just raw resp prob for T3 T4 plotted separately for Exp2)
 - Text summary: parameter ranges, key qualitative patterns
 
 Fitting results:
